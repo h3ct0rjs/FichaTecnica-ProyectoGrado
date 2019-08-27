@@ -101,7 +101,7 @@
 \hline
 \textbf{email} & hfjimenez@utp.edu.co \\
 \hline
-\textbf{Teléfonos} & +573127400482 +573175548245 \\
+\textbf{Teléfonos} &  +573175548245 \\
 \hline
 \end{tabular}
 \end{center}
@@ -143,7 +143,7 @@
 \hline
 \multicolumn{1}{|c|}{ \textbf{3. Título del Trabajo de Grado}}\\
 \hline
-Despliegues Automaticos de Infraestructuras HPC multinucleo y multimaquina con maquinas virtuales utilizando Vagrant\\
+Despliegues Automáticos de Infraestructuras HPC multinucleo y multimaquina con maquinas virtuales utilizando Vagrant\\
 \hline
 \end{tabular}
 \end{center}
@@ -155,9 +155,15 @@ Despliegues Automaticos de Infraestructuras HPC multinucleo y multimaquina con m
 \hline
 \multicolumn{1}{|c|}{ \textbf{4. Introducción} }\\
 \hline
-Introduccion de Infraestructure as a Code, Utilización de maquinas virtuales para entornos educativos, construccion de cluster .\\
+La computación de alto rendimiento o HPC de sus siglas en ingles \textit{High Performance Computing} es un campo especial e importante de las ciencias de la computación que implica resolver problemas complejos que demandan grandes capacidades de recursos computacionales(\textit{como ejemplo un gran de numero de procesadores, alta cantidad de Memoria, alta capacidad de almacenamiento}), es una de las mejores maneras de computar algoritmos en diferentes campos de la ciencia como la física, medicina, bioinformatica,  mecánica, química u otros problemas comunes de Big Data. Estas tareas y procesos son demasiado grandes para ser realizados en una sola maquina, por ello se hace necesario construir lo que se denomina un \textit{Clúster} de computadores definido como un grupo de múltiples nodos o computadores que trabajan de manera conjunta y distribuida para cumplir con una meta. Debido a la naturaleza de múltiples computadores conectados entre si, existen diferentes modelos de computación paralela y distribuida que han sido desarrollados e implementados por la comunidad científica para la coordinación de los computadores pertenecientes a un Clúster, de manera que su uso sea eficiente y efectivo. Un modelo muy utilizado y popular es el \underline{paso de mensajes}, una técnica empleada en programación concurrente para aportar sincronización entre procesos y permitir la exclusión mutua, su diseño esta pensando para algoritmos y programas que exploten la existencia de múltiples procesadores en un Cluster. MPI es el estándar de facto preferido por la comunidad HPC a la hora de realizar implementaciones de paso de mensajes.
+
+Tradicionalmente, configurar un cluster de computadores, por ejemplo, un cluster MPI, es una tarea desafiante que requiere que estudiantes, aficionados, novatos y avanzados pasen un tiempo considerable configurando los diferentes elementos del sistema y la red. Sin embargo, en los últimos años el avance del Cloud Computing y la implementación de metodologías ágiles que impulsan culturas como la DevOps han hecho que la automatización en todas las etapas sea masiva, gracias a esto 
+diferentes proyectos de software libre y de código abierto han visto la luz, como \stromg{Vagrant}, una herramienta de código abierto que permite la creación y configuración de ambientes virtuales portables y ligeros. En este proyecto se presenta una implementación utilizando Vagrant para realizar  la construcción automática de un cluster MPI multinucleo y multimaquina.
+
+\\
 \hline
 \end{tabular}
+
 \end{center}
 %------------------------------------------
 %Problema
@@ -167,7 +173,11 @@ Introduccion de Infraestructure as a Code, Utilización de maquinas virtuales pa
 \multicolumn{1}{|c|}{ \textbf{5. Planteamiento del Problema} }\\
 \hline
 \textbf{Descripción}
-Que problemas resuelve la infraestructura como codigo, ataques que resuelve vagrant\\
+
+La infraestructura como código o IaC (Infraestructure as Code) es uno de los pilares fundamentales de la cultura DevOps, la IaC hace referencia a la práctica de poder administrar, aprovisionar, actualizar, monitorear y configurar la infraestructura TI de las empresas, se utilizan scripts en diferentes lenguajes de programación en lugar de configurar las maquinas de manera manual. La IaC trata todas las configuraciones de la infraestructura TI como código permite a las máquinas virtuales gestionarse de manera programada y automática, lo que elimina la necesidad de realizar configuraciones manuales por parte del personal a cargo de componentes individuales de hardware. Esto hace que la infraestructura sea muy moldeable, es decir, escalable y replicable siendo agnóstico a el hardware, proveedor de servidor cloud, además se utilizan las mismas practicas implementadas para la gestión y versionamiento del código de aplicaciones de software. 
+
+La implementación y construcción de un cluster MPI implica demasiado tiempo y conocimiento de todos los elementos que lo componen, es necesario conocer un completo detalle de como realizar la instalación de cada uno de los componentes del cluster, algunas tareas que son repetitivas se puede automatizar implementando IaC ejemplo de ello es la creación de usuarios con sus niveles de privilegios, las configuraciones de seguridad, la configuración de servicios, las configuraciones de sistemas de archivos compartidos entre otras tareas repetitivas. Es necesario en un cluster MPI asegurar la inmutabilidad y homogeneidad en las configuraciones presentes en los nodos que lo componen.
+
 \hline
 \end{tabular}
 \end{center}
@@ -179,9 +189,8 @@ Que problemas resuelve la infraestructura como codigo, ataques que resuelve vagr
 \hline
 \multicolumn{1}{|c|}{ \textbf{6. Objetivo General}}\\
 \hline
-Cual es el objetivo general, generar guias para el laboratorio de HPC. 
-Que cosas podria aprender un estudiante con vagrant ?
-Cambiar Objetivos\\
+Diseñar e implementar un conjunto de programas para el aprovisionamiento automático de un cluster, capaz de computar algoritmos de alta demanda computacional, soportados a través de la librerıa MPI y maquinas virtuales.
+\\
 \hline
 \end{tabular}
 \end{center}
@@ -195,10 +204,10 @@ Cambiar Objetivos\\
 \multicolumn{1}{|c|}{ \textbf{7. Objetivos Específicos}}\\
 \hline
 \begin{itemize}
-	\item Implementar alguna de las técnicas para el análisis de logs y eventos que cumplan el estándar RFC3164.
-	\item Desarrollar e implementar un sistema de archivos distribuido en el cluster.
-	\item Implementar un cluster utilizando contenedores para garantizar el aislamiento y protección de los datos recolectados.
-    \item Realizar pruebas de desempeño frente a otras posibles soluciones del mismo costo.
+	\item Obtener la lista de requerimientos, limitaciones, especificaciones para el diseño del aprovisionamiento automático utilizando Vagrant.
+	\item Desarrollar e implementar un sistema de archivos distribuido en el Clúster MPI.
+    \item Realizar pruebas de ejecución y desempeño multinucleo.
+    \item Realizar pruebas de ejecución y desempeño multimaquina en el Clúster MPI.
 \end{itemize} \\
 \hline
 \end{tabular}
@@ -231,12 +240,13 @@ Cambiar Objetivos\\
         3. Pruebas
   
     \textbf{Hipótesis}
-    Será posible obtener una reducción costos de hardware para la recolección, pre-procesamiento, filtrado y análisis de acontecimientos obtenidos de múltiples fuentes que generen eventos o logs que cumplan con el estándar RFC3164. 
+    Será posible construir un conjunto de programas que realicen el aprovisionamiento e instalacion automatica de un cluster MPI y sus nodos ?, Será que este entregable ayudara a los estudiantes del curso de HPC a entender como instalar un cluster MPI?
     \par
     
     \textbf{Variables}
     \begin{itemize}
         \item Costos de Hardware
+        \item Tiempo de aprovisionamiento
         \item Performance del cluster
     \end{itemize} \\
 
@@ -250,8 +260,7 @@ muy útil gracias a su simplicidad y que el proyecto no será muy cambiante por 
 que la estructura de cronograma de actividades no debería verse afectado durante
 el desarrollo de las actividades que conforman al proyecto.
 
-  El enfoque y método seguido para la ejecución de este proyecto es \textit{“aprender haciéndoló”}, parte desde la construcción y ensamblaje de los componentes de las
-SBCs hasta la parametrización y configuración de cada una de las tecnologías y software implicados, todo ello llevado a cabo desde un punto de vista práctico.
+  El enfoque y método seguido para la ejecución de este proyecto es \textit{“aprender haciéndoló”}, parte desde el aprendizaje de las caracteristicas de Vagrant y la programacion de los scripts en ruby hasta hasta la parametrización y configuración de cada una de las tecnologías y software implicados para dejar el cluster de MPI funcionando, todo ello llevado a cabo desde un punto de vista práctico.
         
         
     \end{itemize}\\  
@@ -274,7 +283,7 @@ SBCs hasta la parametrización y configuración de cada una de las tecnologías 
         
         \item Estrategias
         
-        Se llevará a cabo un conjunto de pruebas sobre el sistema, para establecer si cumple con las estimaciones del proyecto y si es un funcional.
+        Se llevará a cabo un conjunto de pruebas sobre el sistema, para establecer si cumple con las estimaciones del proyecto y si es funcional.
     \end{itemize}\\  
 
 \hline
@@ -299,21 +308,15 @@ A continuación se describe un esquema de las actividades que se desarrollarán 
     \hline
     \textbf{Actividad / Tiempo(Meses)} & \textbf{1} & \textbf{2} & \textit{\textbf{3}} & \textbf{4} & \textbf{5} & \textbf{6} \\
     \hline
-    Documentación e investigación detallada de eletronica en tarjetas SBC & X &   &   &   &   &   \\
+    Consultas e investigación sobre MPI, cluster y computación de alto rendimiento. & X &   &   &   &   &   \\
     \hline
-    Estado del arte de Sistemas operativos para tarjetas SBC & X &   &   &   &   &   \\
+    Investigación y Consulta de Infraestructura como Código, entendimiento del funcionamiento interno de Vagrant & X &   &   &   &   &   \\
     \hline
-    Elaboración de propuesta de trabajo & X &   &   &   &   &   \\
+    Pruebas de aprovisionamiento automático de diferentes elementos de infraestructura con Vagrant & X &   &   &   &   &   \\
     \hline
-    Investigación sobre las metodologías a aplicar en el proyecto &   & X &   &   &   &   \\
-    \hline
-    Análisis de arquitecturas de software, sistemas de archivos,  contenedores distribuidos&   & X &   &   &   &   \\
+    Implementación de algoritmos y scripts para la instalación de utilidades & X &   &   &   &   &   \\
     \hline
     Elección de las técnicas que serán aplicadas &   &   & X &   &   &   \\
-    \hline
-    Investigar sobre cada técnica &   &   & X &   &   &   \\
-    \hline
-    Desarrollo de algoritmo &   &   &   & X &   &   \\
     \hline
     Pruebas sobre algoritmo &   &   &   & X &   &   \\
     \hline
@@ -355,22 +358,22 @@ A continuación se describe un esquema de las actividades que se desarrollarán 
     \hline
     \textbf{Recurso Humano} & \textbf{Costo(Peso Colombiano) / Hora } & \textbf{Número Horas} & \textbf{Total} & \textbf{Fuente Financiadora} \\
     \hline
-    Investigador (Tesista1) & 5.700 & 200 & 1.140.000 & Universidad \\
+    Investigador (Tesista   ) & 6.100 & 200 & 1.220.000 & Universidad \\
     \hline    \hline
-    Director / Asesor & 30.000 & 80 & 2.400.000 & Universidad \\
+    Director / Asesor & 35.000 & 80 & 2.800.000 & Universidad \\
     \hline
     \textbf{Compra o Alquiler de Maquinaria y Equipos} & \textbf{Costo(Peso Colombiano) } & \textbf{Cantidad} & \textbf{Total} & \textbf{Fuente Financiadora} \\
     \hline
-    Computador Dell, procesador i5, 1TB DD y 10GB RAM & 1.900.000 & 1 & 1.900.000 & Tesista 1 \\
+    Computador Thinkpad X1 6TH, procesador i7 8GEN, 1TB DD y 16GB RAM & 7.100.000 & 1 & 7.100.000 & Tesista  \\
     \hline
 
     \textbf{Fungibles} & \textbf{Costo(Peso Colombiano) } & \textbf{Cantidad} & \textbf{Total} & \textbf{Fuente Financiadora} \\
     \hline
     Papelería y otros & 50.000 &  & 50.000 & Tesista \\
     \hline
-    Servicios públicos & 95.000 &  & 95.000 & Tesista1 \\
+    Servicios públicos & 130.000 &  & 130.000 & Tesista  \\
     \hline
-    \textbf{Costo Total del Proyecto} &  &  & 7.650.000 &  \\
+    \textbf{Costo Total del Proyecto} &  &  & 11.300.000 &  \\
     \hline
     \end{tabular}
     \end{center}\\
@@ -385,7 +388,14 @@ A continuación se describe un esquema de las actividades que se desarrollarán 
 \multicolumn{1}{|c|}{ \textbf{11. Bibliografía}}\\
 \hline
 \\
-\includegraphics[width=0.95\textwidth]{ref.png}
+\begin{itemize}
+    \item Infrastructure As Code,  Kief Morris
+    \item Vagrant: Up and Running: Create and Manage Virtualized Development Environments
+    \item Infrastructure as Code: Managing Servers in the Cloud
+    \item Site Reliability Engineering: How Google Runs Production Systems
+    
+\end{itemize}
+
 \\
 \hline
 \end{tabular}
