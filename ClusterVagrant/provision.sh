@@ -23,7 +23,7 @@ main() {
 }	
 
 repositories_go() {
-	echo -e "${WHITE}#########################${NC}"
+	
 	echo -e "${CYAN}OpenMP and MPI CLUSTER, Grade Project${NC}"
 	echo -e "${CYAN}Universidad Tecnologica de Pereira, 2019${NC}"
 	echo -e "${WHITE}Provision.sh Started${NC}"
@@ -53,13 +53,18 @@ tools_go() {
 }
 
 hostnames_go(){
+	echo -e "[${WHITE}Ok${NC}] Hostname Configuration"
+	
 	echo "10.11.12.50 master">>/etc/hosts
-	echo "10.11.12.51 worker1">>/etc/hosts
-	echo "10.11.12.52 worker2">>/etc/hosts
-	echo "10.11.12.53 worker3">>/etc/hosts
+
+	for i in {1..3}; 
+	do
+  		echo "10.11.12.$i node-$i">>/etc/hosts
+	done
+	cat /etc/hosts
 }
 
-sshkeys_copy(){
+sshkeys_copy(){	
       # we only generate the key on one of the nodes, then we copy this to other nodes.
       echo -e "[${WHITE}Ok${NC}] Creating SSH_Keys"
       if [[ ! -e /vagrant/id_rsa ]]; then
@@ -73,15 +78,15 @@ sshkeys_copy(){
 
 nfs_folder(){
         echo -e "[${WHITE}Ok${NC}] Setting up Shared FileSystem"
-
 	if [ "$HOSTNAME" = "master" ]; then
  		echo -e "[${WHITE}Ok${NC}] Installing NFS on Master Node"
 		mkdir /home/vagrant/cloud	#Create the cloud folder to shared accross the cluster :) 
 		chown vagrant:vagrant  /home/vagrant/cloud
 		apt install -y nfs-server
 		echo "/home/vagrant/cloud *(rw,sync,no_root_squash,no_subtree_check)">>/etc/exports	#Persistence against reboots.
-		exportfs -a
+	    exportfs -a
 		service nfs-kernel-server restart
+		df -h
 	else 
 		echo -e "[${WHITE}Ok${NC}] Installing NFS on Worker Node"
 		apt install -y nfs-common
@@ -104,5 +109,4 @@ test_connectionssh(){
 
 main
 exit 0
-
 
