@@ -1,5 +1,5 @@
 # Proyecto de Grado: 
-_Despliegues Automaticos de Infraestructura HPC Multinucleo, Multimaquina con maquinas virtuales utilizando Vagrant_
+_Despliegue  Autom ́atico  de  Infraestructuras  HPC  multinucleo  y  multimaquina  conmaquinas virtuales utilizando Vagran_
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 

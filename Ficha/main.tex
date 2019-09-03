@@ -143,7 +143,7 @@
 \hline
 \multicolumn{1}{|c|}{ \textbf{3. Título del Trabajo de Grado}}\\
 \hline
-Despliegues Automáticos de Infraestructuras HPC multinucleo y multimaquina con maquinas virtuales utilizando Vagrant\\
+Despliegue Automático de Infraestructuras HPC multinucleo y multimaquina con maquinas virtuales utilizando Vagrant\\
 \hline
 \end{tabular}
 \end{center}
@@ -155,9 +155,9 @@ Despliegues Automáticos de Infraestructuras HPC multinucleo y multimaquina con 
 \hline
 \multicolumn{1}{|c|}{ \textbf{4. Introducción} }\\
 \hline
-La computación de alto rendimiento o HPC de sus siglas en ingles \textit{High Performance Computing} es un campo especial e importante de las ciencias de la computación que implica resolver problemas complejos que demandan grandes capacidades de recursos computacionales(\textit{como ejemplo un gran de numero de procesadores, alta cantidad de Memoria, alta capacidad de almacenamiento}), es una de las mejores maneras de computar algoritmos en diferentes campos de la ciencia como la física, medicina, bioinformatica,  mecánica, química u otros problemas comunes de Big Data. Estas tareas y procesos son demasiado grandes para ser realizados en una sola maquina, por ello se hace necesario construir lo que se denomina un \textit{Clúster} de computadores definido como un grupo de múltiples nodos o computadores que trabajan de manera conjunta y distribuida para cumplir con una meta. Debido a la naturaleza de múltiples computadores conectados entre si, existen diferentes modelos de computación paralela y distribuida que han sido desarrollados e implementados por la comunidad científica para la coordinación de los computadores pertenecientes a un Clúster, de manera que su uso sea eficiente y efectivo. Un modelo muy utilizado y popular es el \underline{paso de mensajes}, una técnica empleada en programación concurrente para aportar sincronización entre procesos y permitir la exclusión mutua, su diseño esta pensando para algoritmos y programas que exploten la existencia de múltiples procesadores en un Cluster. MPI es el estándar de facto preferido por la comunidad HPC a la hora de realizar implementaciones de paso de mensajes.
+La computación de alto rendimiento o HPC de sus siglas en ingles \textit{High Performance Computing} es un campo especial e importante de las ciencias de la computación que implica resolver problemas complejos que demandan grandes capacidades de recursos computacionales(\textit{como ejemplo un gran de numero de procesadores, alta cantidad de Memoria, alta capacidad de almacenamiento}), es una de las mejores maneras de computar algoritmos en diferentes campos de la ciencia como la física, medicina, bioinformatica,  mecánica, química u otros problemas comunes de Big Data. Estas tareas y procesos son demasiado grandes para ser realizados en una sola maquina, por ello se hace necesario construir lo que se denomina un \textit{Clúster} de computadores definido como un grupo de múltiples nodos o computadores que trabajan de manera conjunta y distribuida para cumplir con una meta. Debido a la naturaleza de múltiples computadores conectados entre si, existen diferentes modelos de computación paralela y distribuida que han sido desarrollados e implementados por la comunidad científica para la coordinación de los computadores pertenecientes a un Clúster, de manera que su uso sea eficiente y efectivo. Un modelo muy utilizado y popular es el \textit{paso de mensajes}, una técnica empleada en programación concurrente para aportar sincronización entre procesos y permitir la exclusión mutua, su diseño esta pensando para algoritmos y programas que exploten la existencia de múltiples procesadores en un Cluster. MPI es el estándar de facto preferido por la comunidad HPC a la hora de realizar implementaciones de paso de mensajes.
 
-Tradicionalmente, configurar un cluster de computadores, por ejemplo, un cluster MPI, es una tarea desafiante que requiere que estudiantes, aficionados, novatos y avanzados pasen un tiempo considerable configurando los diferentes elementos del sistema y la red. Sin embargo, en los últimos años el avance del Cloud Computing y la implementación de metodologías ágiles que impulsan culturas como la DevOps han hecho que la automatización en todas las etapas sea masiva, gracias a esto 
+Tradicionalmente, configurar un cluster de computadores, por ejemplo, un cluster MPI, es una tarea desafiante que requiere que estudiantes, aficionados, novatos y avanzados pasen un tiempo configurando los diferentes elementos del sistema y la red. Sin embargo, en los últimos años el avance del Cloud Computing y la implementación de metodologías ágiles que impulsan culturas como la DevOps han hecho que la automatización en todas las etapas sea masiva, gracias a esto 
 diferentes proyectos de software libre y de código abierto han visto la luz, como \stromg{Vagrant}, una herramienta de código abierto que permite la creación y configuración de ambientes virtuales portables y ligeros. En este proyecto se presenta una implementación utilizando Vagrant para realizar  la construcción automática de un cluster MPI multinucleo y multimaquina.
 
 \\
@@ -189,7 +189,7 @@ La implementación y construcción de un cluster MPI implica demasiado tiempo y 
 \hline
 \multicolumn{1}{|c|}{ \textbf{6. Objetivo General}}\\
 \hline
-Diseñar e implementar un conjunto de programas para el aprovisionamiento automático de un cluster, capaz de computar algoritmos de alta demanda computacional, soportados a través de la librerıa MPI y maquinas virtuales.
+Diseñar e implementar un conjunto de programas para el aprovisionamiento automático de un cluster computacional sobre máquinas virtuales, que soporten procesos con MPI.
 \\
 \hline
 \end{tabular}
@@ -223,12 +223,11 @@ Diseñar e implementar un conjunto de programas para el aprovisionamiento autom�
 \hline
 \textbf{Fases de la Metodología}
     \begin{enumerate}
-        \item Investigación y Análisis:
-        xx
-        \item Formulación
-		xx
+        \item Fase 1 : Recolección de requerimientos y análisis de la información
+        \item Fase 2 : Diseño e implementación de despliegues automáticos
+        \item Fase 3 : Diseño e implementación de pruebas de despliegue
+        \item Fase 4 : Documentación y conclusiones
         \end{enumerate}\\
-        
 \hline
 \end{tabular}
 \end{center}
@@ -277,7 +276,7 @@ el desarrollo de las actividades que conforman al proyecto.
         
         \item Tipo de investigación
         
-        Basados en los puntos anteriores se considera que éste es un Proyecto de investigación; ya que se pretende que por medio de la obtención de nuevos conocimientos por medio de investigación, se obtenga un resultado o entregable después de la culminación. 
+        Basados en los puntos anteriores se considera que éste es un Proyecto de aplicación; ya que se pretende que por medio de la obtención de nuevos conocimientos por medio de investigación, se obtenga un resultado o entregable después de la culminación. 
     
         En esta investigación se utilizará un enfoque cuantitativo. Además de que se empleará el método científico.
         
@@ -341,11 +340,13 @@ A continuación se describe un esquema de las actividades que se desarrollarán 
 \textbf{Recursos Humanos}
 \begin{itemize}
     \item Director de proyecto.
-    \item Laboratorio Sirius CIDT
-    \item Cluster Lovelace
-    \item Grupo de Investigación Sirius. \par
-    Ingeniería de Sistemas y Computación. Universidad Tecnológica de Pereira.
 \end{itemize}\\
+\textbf{Recursos Físicos}
+\item Laboratorio Sirius CIDT
+    \item Cluster Lovelace, Bloque L
+    \item Locaciones Grupo de Investigación Sirius. \par
+    Ingeniería de Sistemas y Computación. Universidad Tecnológica de Pereira.
+
 \hline
 \end{tabular}
 \end{center}
