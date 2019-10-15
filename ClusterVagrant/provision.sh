@@ -1,6 +1,7 @@
 #!/bin/bash
-#Provision a MPI Cluster using vagrant. 
+#Provision MPI Cluster using vagrant. 
 #Bash Script configuration
+# h3ct0rjs
 
 BLACK='\033[0;30m'        # Black
 RED='\033[0;31m'          # Red
@@ -15,11 +16,12 @@ NC='\033[0m' 		  # No Color
 main() {
 	repositories_go
 	update_go
-	tools_go
-	autoremove_go
-	hostnames_go
-	sshkeys_copy
-	nfs_folder
+	ifconfig 
+	#tools_go
+	#autoremove_go
+	#hostnames_go
+	#sshkeys_copy
+	#nfs_folder
 }	
 
 repositories_go() {
