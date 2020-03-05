@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  
+  config.vm.define "master-vm" do | vm1| 
+      vm1.vm.hostname = "master-cluster"
+      vm1.vm.box = "ubuntu/xenial64"
+      vm1.vm.box_check_update = false
+      vm1.vm.network "forwarded_port", guest: 80, host: 8081
+      vm1.vm.network "private_network", ip: "192.168.33.10"
+
+      vm1.vm.provision "shell", inline: <<-SHELL
+        apt-get update
+        apt-get install -y nginx
+      SHELL
+  end
+
+  (2..4).each do |i|
+    config.vm.define "slave#{i}-vm" do | slave| 
+      slave.vm.box = "ubuntu/xenial64"
+      slave.vm.hostname = "slave#{i}-vm"
+      slave.vm.box_check_update = false
+      slave.vm.network "private_network", ip: "192.168.33.2#{i}"
+      slave.vm.provision "shell", inline: <<-SHELL
+        apt update
+        ping -c 5 192.168.33.10
+      SHELL
+    end
+  end
+
+end

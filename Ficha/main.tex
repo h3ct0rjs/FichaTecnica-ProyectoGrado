@@ -112,7 +112,7 @@
 \hline
 \textbf{Nombre del Director} & Ramiro Andrés Barrios Valencia \\
 \hline
-\textbf{VoBo Director} &  \\
+\textbf{VoBo Director(Firma)} &  \\
 \hline
 \textbf{VoBo Comité Curricular} &  \\
 \hline
@@ -155,10 +155,10 @@ Despliegue Automático de Infraestructuras HPC multinucleo y multimaquina con ma
 \hline
 \multicolumn{1}{|c|}{ \textbf{4. Introducción} }\\
 \hline
-La computación de alto rendimiento o HPC de sus siglas en ingles \textit{High Performance Computing} es un campo especial e importante de las ciencias de la computación que implica resolver problemas complejos que demandan grandes capacidades de recursos computacionales(\textit{como ejemplo un gran de numero de procesadores, alta cantidad de Memoria, alta capacidad de almacenamiento}), es una de las mejores maneras de computar algoritmos en diferentes campos de la ciencia como la física, medicina, bioinformatica,  mecánica, química u otros problemas comunes de Big Data. Estas tareas y procesos son demasiado grandes para ser realizados en una sola maquina, por ello se hace necesario construir lo que se denomina un \textit{Clúster} de computadores definido como un grupo de múltiples nodos o computadores que trabajan de manera conjunta y distribuida para cumplir con una meta. Debido a la naturaleza de múltiples computadores conectados entre si, existen diferentes modelos de computación paralela y distribuida que han sido desarrollados e implementados por la comunidad científica para la coordinación de los computadores pertenecientes a un Clúster, de manera que su uso sea eficiente y efectivo. Un modelo muy utilizado y popular es el \textit{paso de mensajes}, una técnica empleada en programación concurrente para aportar sincronización entre procesos y permitir la exclusión mutua, su diseño esta pensando para algoritmos y programas que exploten la existencia de múltiples procesadores en un Cluster. MPI es el estándar de facto preferido por la comunidad HPC a la hora de realizar implementaciones de paso de mensajes.
+La computación de alto rendimiento o HPC de sus siglas en ingles \textit{High Performance Computing} es un campo especial e importante de las ciencias de la computación que implica resolver problemas complejos que demandan grandes capacidades de recursos computacionales(1)(\textit{como ejemplo un gran de numero de procesadores, alta cantidad de Memoria, alta capacidad de almacenamiento}), es una de las mejores maneras de computar algoritmos en diferentes campos de la ciencia como la física, medicina, bioinformatica,  mecánica, química u otros problemas comunes de Big Data. Estas tareas y procesos son  grandes para ser realizados en una sola maquina, por ello se hace necesario construir lo que se denomina un \textit{Clúster} de computadores definido como un grupo de múltiples nodos o computadores que trabajan de manera conjunta y distribuida para cumplir con una meta. Debido a la naturaleza de múltiples computadores conectados entre si, existen diferentes modelos de computación paralela y distribuida que han sido desarrollados e implementados por la comunidad científica para la coordinación de los computadores pertenecientes a un Clúster, de manera que su uso sea eficiente y efectivo. Un modelo muy utilizado y popular es el \textit{paso de mensajes}, una técnica empleada en programación concurrente para aportar sincronización entre procesos y permitir la exclusión mutua, su diseño esta pensando para algoritmos y programas que exploten la existencia de múltiples procesadores en un Cluster. MPI es el estándar de facto preferido por la comunidad HPC a la hora de realizar implementaciones de paso de mensajes.
 
 Tradicionalmente, configurar un cluster de computadores, por ejemplo, un cluster MPI, es una tarea desafiante que requiere que estudiantes, aficionados, novatos y avanzados pasen un tiempo configurando los diferentes elementos del sistema y la red. Sin embargo, en los últimos años el avance del Cloud Computing y la implementación de metodologías ágiles que impulsan culturas como la DevOps han hecho que la automatización en todas las etapas sea masiva, gracias a esto 
-diferentes proyectos de software libre y de código abierto han visto la luz, como \stromg{Vagrant}, una herramienta de código abierto que permite la creación y configuración de ambientes virtuales portables y ligeros. En este proyecto se presenta una implementación utilizando Vagrant para realizar  la construcción automática de un cluster MPI multinucleo y multimaquina.
+diferentes proyectos de software libre y de código abierto han visto la luz, como \strong{Vagrant}, una herramienta de código abierto que permite la creación y configuración de ambientes virtuales portables y ligeros. En este proyecto se presenta una implementación utilizando Vagrant para realizar  la construcción automática de un cluster MPI multinucleo y multimaquina.
 
 \\
 \hline
@@ -176,7 +176,7 @@ diferentes proyectos de software libre y de código abierto han visto la luz, co
 
 La infraestructura como código o IaC (Infraestructure as Code) es uno de los pilares fundamentales de la cultura DevOps, la IaC hace referencia a la práctica de poder administrar, aprovisionar, actualizar, monitorear y configurar la infraestructura TI de las empresas, se utilizan scripts en diferentes lenguajes de programación en lugar de configurar las maquinas de manera manual. La IaC trata todas las configuraciones de la infraestructura TI como código permite a las máquinas virtuales gestionarse de manera programada y automática, lo que elimina la necesidad de realizar configuraciones manuales por parte del personal a cargo de componentes individuales de hardware. Esto hace que la infraestructura sea muy moldeable, es decir, escalable y replicable siendo agnóstico a el hardware, proveedor de servidor cloud, además se utilizan las mismas practicas implementadas para la gestión y versionamiento del código de aplicaciones de software. 
 
-La implementación y construcción de un cluster MPI implica demasiado tiempo y conocimiento de todos los elementos que lo componen, es necesario conocer un completo detalle de como realizar la instalación de cada uno de los componentes del cluster, algunas tareas que son repetitivas se puede automatizar implementando IaC ejemplo de ello es la creación de usuarios con sus niveles de privilegios, las configuraciones de seguridad, la configuración de servicios, las configuraciones de sistemas de archivos compartidos entre otras tareas repetitivas. Es necesario en un cluster MPI asegurar la inmutabilidad y homogeneidad en las configuraciones presentes en los nodos que lo componen.
+La implementación y construcción de un cluster MPI implica  tiempo y conocimiento de todos los elementos que lo componen, es necesario conocer un completo detalle de como realizar la instalación de cada uno de los componentes del cluster, algunas tareas que son repetitivas se puede automatizar implementando IaC ejemplo de ello es la creación de usuarios con sus niveles de privilegios, las configuraciones de seguridad, la configuración de servicios, las configuraciones de sistemas de archivos compartidos entre otras tareas repetitivas. Es necesario en un cluster MPI asegurar la inmutabilidad y homogeneidad en las configuraciones presentes en los nodos que lo componen.
 
 \hline
 \end{tabular}
@@ -206,8 +206,8 @@ Diseñar e implementar un conjunto de programas para el aprovisionamiento autom�
 \begin{itemize}
 	\item Obtener la lista de requerimientos, limitaciones, especificaciones para el diseño del aprovisionamiento automático utilizando Vagrant.
 	\item Desarrollar e implementar un sistema de archivos distribuido en el Clúster MPI.
-    \item Realizar pruebas de ejecución y desempeño multinucleo.
-    \item Realizar pruebas de ejecución y desempeño multimaquina en el Clúster MPI.
+    \item Realizar pruebas de ejecución y funcionamiento del cluster.
+    \item Realizar pruebas de ejecución y desempeño multimaquina en el Clúster MPI compuesto por maquinas virtuales.
 \end{itemize} \\
 \hline
 \end{tabular}
@@ -239,27 +239,22 @@ Diseñar e implementar un conjunto de programas para el aprovisionamiento autom�
         3. Pruebas
   
     \textbf{Hipótesis}
-    Será posible construir un conjunto de programas que realicen el aprovisionamiento e instalacion automatica de un cluster MPI y sus nodos ?, Será que este entregable ayudara a los estudiantes del curso de HPC a entender como instalar un cluster MPI?
+    Será posible construir un conjunto de programas que realicen el aprovisionamiento e instalación automática de un cluster MPI y sus nodos ?, Será que este entregable ayudara a los estudiantes del curso de HPC a entender como instalar un cluster MPI?
     \par
     
     \textbf{Variables}
     \begin{itemize}
         \item Costos de Hardware
         \item Tiempo de aprovisionamiento
-        \item Performance del cluster
+        \item Performance del cluster dado que son maquinas virtuales.
     \end{itemize} \\
 
     
     \textbf{Diseño Metodológico}
     \begin{itemize}
-        \item  Mediante Diagrama de Gantt, Se recogen las tareas y actividades que componen al
-proyecto y se asocian a un cronograma para de esta forma dejar reflejado la
-duración de las actividades y del proyecto y de cada uno de las entregas. No será
-muy útil gracias a su simplicidad y que el proyecto no será muy cambiante por lo
-que la estructura de cronograma de actividades no debería verse afectado durante
-el desarrollo de las actividades que conforman al proyecto.
+        \item 
 
-  El enfoque y método seguido para la ejecución de este proyecto es \textit{“aprender haciéndoló”}, parte desde el aprendizaje de las caracteristicas de Vagrant y la programacion de los scripts en ruby hasta hasta la parametrización y configuración de cada una de las tecnologías y software implicados para dejar el cluster de MPI funcionando, todo ello llevado a cabo desde un punto de vista práctico.
+  El enfoque y método seguido para la ejecución de este proyecto es \textit{“aprender haciéndolo”}, parte desde el aprendizaje de las características de Vagrant y la programación de los scripts en Ruby hasta hasta la parametrización y configuración de cada una de las tecnologías y software implicados para dejar el cluster de MPI funcionando, todo ello llevado a cabo desde un punto de vista práctico.
         
         
     \end{itemize}\\  
@@ -313,11 +308,11 @@ A continuación se describe un esquema de las actividades que se desarrollarán 
     \hline
     Pruebas de aprovisionamiento automático de diferentes elementos de infraestructura con Vagrant & X &   &   &   &   &   \\
     \hline
-    Implementación de algoritmos y scripts para la instalación de utilidades & X &   &   &   &   &   \\
+    Implementación de algoritmos y scripts para la instalación de utilidades &  & X  &   &   &   &   \\
     \hline
-    Elección de las técnicas que serán aplicadas &   &   & X &   &   &   \\
+    Pruebas de funcionamiento comunicación master-nodos &   &   & X &   &   &   \\
     \hline
-    Pruebas sobre algoritmo &   &   &   & X &   &   \\
+    Ejecución de algoritmo en cluster &   &   &   & X &   &   \\
     \hline
     Elaboración de informe final &   &   &   &   & X &   \\
     \hline
@@ -343,10 +338,10 @@ A continuación se describe un esquema de las actividades que se desarrollarán 
 \end{itemize}\\
 \textbf{Recursos Físicos}
 \item Laboratorio Sirius CIDT
-    \item Cluster Lovelace, Bloque L
+    \item Cluster Lovelace, Bloque L.
+    \item Computador Tesista, Servidores Físicos a disposición tesista.
     \item Locaciones Grupo de Investigación Sirius. \par
     Ingeniería de Sistemas y Computación. Universidad Tecnológica de Pereira.
-
 \hline
 \end{tabular}
 \end{center}
@@ -359,13 +354,13 @@ A continuación se describe un esquema de las actividades que se desarrollarán 
     \hline
     \textbf{Recurso Humano} & \textbf{Costo(Peso Colombiano) / Hora } & \textbf{Número Horas} & \textbf{Total} & \textbf{Fuente Financiadora} \\
     \hline
-    Investigador (Tesista   ) & 6.100 & 200 & 1.220.000 & Universidad \\
+    Investigador (Tesista   ) & 6.500 & 200 & 1.300.000 & Universidad \\
     \hline    \hline
-    Director / Asesor & 35.000 & 80 & 2.800.000 & Universidad \\
+    Director / Asesor & 38.000 & 80 & 3.040.000 & Universidad \\
     \hline
     \textbf{Compra o Alquiler de Maquinaria y Equipos} & \textbf{Costo(Peso Colombiano) } & \textbf{Cantidad} & \textbf{Total} & \textbf{Fuente Financiadora} \\
     \hline
-    Computador Thinkpad X1 6TH, procesador i7 8GEN, 1TB DD y 16GB RAM & 7.100.000 & 1 & 7.100.000 & Tesista  \\
+    Computador Thinkpad X1 6TH, procesador i7 8GEN, 1TB DD y 16GB RAM & 8.100.000 & 1 & 8.100.000 & Tesista  \\
     \hline
 
     \textbf{Fungibles} & \textbf{Costo(Peso Colombiano) } & \textbf{Cantidad} & \textbf{Total} & \textbf{Fuente Financiadora} \\
@@ -374,7 +369,7 @@ A continuación se describe un esquema de las actividades que se desarrollarán 
     \hline
     Servicios públicos & 130.000 &  & 130.000 & Tesista  \\
     \hline
-    \textbf{Costo Total del Proyecto} &  &  & 11.300.000 &  \\
+    \textbf{Costo Total del Proyecto} &  &  & 12.620.000 &  \\
     \hline
     \end{tabular}
     \end{center}\\
@@ -390,16 +385,18 @@ A continuación se describe un esquema de las actividades que se desarrollarán 
 \hline
 \\
 \begin{itemize}
+    \item Resource selection and allocation for dynamic adaptive computing in heterogeneous clusters, John U. Duselis The Donald Bren School of Information and Computer Science, University of California, Irvine, Irvine, CA 92697; E. Enrique Cauich ; Richert K. Wang ; Isaac D. Scherson
+    \item Leveraging a Cluster-Booster Architecture for Brain-Scale Simulations, Conference Paper, Pramod Kumbhar,Michael Hines, Aleksandr Ovcharenko, Damian A. Mallon, James King, Florentino Sainz, Felix Schürmann, Fabien Delalondre
     \item Infrastructure As Code,  Kief Morris
     \item Vagrant: Up and Running: Create and Manage Virtualized Development Environments
     \item Infrastructure as Code: Managing Servers in the Cloud
     \item Site Reliability Engineering: How Google Runs Production Systems
     
 \end{itemize}
-
 \\
 \hline
 \end{tabular}
 \end{center}
 %------------------------------------------
+
 \end{document}
