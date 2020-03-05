@@ -1,5 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+# This code attempts to understand the networking part of vagrant and vbox integration 
+# I created a simple for loop to create two slaves nodes and setting private network ipv4 
+# Address, each time I use vm1.vm.network "private_network", ip: "192.168.33.xx" 
+# VBox create a new net interface with that lan segment.
 
 Vagrant.configure("2") do |config|
   
