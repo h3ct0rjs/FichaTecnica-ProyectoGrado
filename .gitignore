@@ -1,13 +1,7 @@
 /tmp
-
 # Editor swapfiles
-
 .*.sw?
-
 *~
-
-
-
 # Vagrant stuff
 acceptance_config.yml
 boxes/*
@@ -16,5 +10,4 @@ boxes/*
 /website/build
 /vagrant-spec.config.rb
 /test/vagrant-spec/.vagrant/
-
-
+.vagrant/*
