@@ -1,0 +1,114 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  
+    config.vm.define "master-vm" do | vm1| 
+        vm1.vm.hostname = "master-cluster"
+        vm1.vm.box = "ubuntu/xenial64"
+        vm1.vm.box_check_update = false
+        
+        vm1.vm.provider "virtualbox" do |vb|
+          vb.gui = false
+          vb.memory = "1024"
+          vb.cpus = 2
+        end
+  
+        vm1.vm.network "forwarded_port", guest: 80, host: 8081
+        vm1.vm.network "private_network", ip: "192.168.33.10"
+        vm1.vm.provision "shell", inline: <<-SHELL
+          apt-get update
+          apt-get -y install  mpich
+          dpkg -l |grep mpich
+          echo "#Cluster File">>/etc/hosts
+          echo "192.168.33.10 master-vm">>/etc/hosts
+          for i in {2..4}; 
+          do
+              echo "192.168.33.2$i slave$i-vm">>/etc/hosts
+          done
+  
+          echo "#SSH Keys Configuration"
+          if [[ ! -e /vagrant/id_rsa ]]; then
+            ssh-keygen -t rsa -b 4096 -f /vagrant/id_rsa -N ""
+          fi
+          (echo; cat /vagrant/id_rsa.pub) >> /home/vagrant/.ssh/authorized_keys
+          cp /vagrant/id_rsa* /home/vagrant/.ssh/
+          chown vagrant:vagrant /home/vagrant/.ssh/id_rsa*
+          chmod -R 600 /home/vagrant/.ssh/authorized_keys
+          chmod 400 /home/vagrant/.ssh/id_rsa
+          echo 'Host 192.168.33.*' >> /home/vagrant/.ssh/config
+          echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config
+          echo 'UserKnownHostsFile /dev/null' >> /home/vagrant/.ssh/config
+  
+  
+          echo -e " Installing NFS on Master Node"
+          mkdir /home/vagrant/cloud	#Create the cloud folder to shared accross the cluster :) 
+          chown vagrant:vagrant  /home/vagrant/cloud
+          apt install -y nfs-server
+          echo "/home/vagrant/cloud *(rw,sync,no_root_squash,no_subtree_check)">>/etc/exports	#Persistence against reboots.
+          exportfs -a
+          service nfs-kernel-server restart
+          df -h
+
+          echo "Creating Machine File in NFS"
+          echo "master-vm">>/home/vagrant/cloud/machinefile
+          echo "slave2-vm">>/home/vagrant/cloud/machinefile
+          echo "slave3-vm">>/home/vagrant/cloud/machinefile
+          echo "slave4-vm">>/home/vagrant/cloud/machinefile
+        SHELL
+    end
+  
+    (2..4).each do |i|
+      config.vm.define "slave#{i}-vm" do | slave| 
+        slave.vm.box = "ubuntu/xenial64"
+        slave.vm.hostname = "slave#{i}-vm"
+        slave.vm.box_check_update = false
+  
+        slave.vm.provider "virtualbox" do |vb|
+          vb.gui = false
+          vb.memory = "512"
+          vb.cpus = 1
+        end
+  
+        slave.vm.network "private_network", ip: "192.168.33.2#{i}"
+        slave.vm.provision "shell", inline: <<-SHELL
+          apt update
+          ping -c 5 192.168.33.10
+          apt-get -y install  mpich
+          dpkg -l |grep mpich
+          echo "#Cluster File">>/etc/hosts
+          echo "192.168.33.10 master-vm">>/etc/hosts
+          for i in {2..4}; 
+          do
+              echo "192.168.33.2$i slave$i-vm">>/etc/hosts
+          done
+          cat /etc/hosts
+          echo "#SSH Keys Configuration"
+  
+          if [[ ! -e /vagrant/id_rsa ]]; then
+            ssh-keygen -t rsa -b 4096 -f /vagrant/id_rsa -N ""
+          fi
+          
+          (echo; cat /vagrant/id_rsa.pub) >> /home/vagrant/.ssh/authorized_keys
+          cp /vagrant/id_rsa* /home/vagrant/.ssh/
+          chown vagrant:vagrant /home/vagrant/.ssh/id_rsa*
+          chmod -R 600 /home/vagrant/.ssh/authorized_keys
+          chmod 400 /home/vagrant/.ssh/id_rsa
+          echo 'Host 192.168.33.*' >> /home/vagrant/.ssh/config
+          echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config
+          echo 'UserKnownHostsFile /dev/null' >> /home/vagrant/.ssh/config
+  
+  
+          echo -e "Installing NFS on Worker Node"
+          apt install -y nfs-common
+          mkdir /home/vagrant/cloud
+          chown vagrant:vagrant  /home/vagrant/cloud
+          mount -t nfs master-vm:/home/vagrant/cloud /home/vagrant/cloud
+          echo "master-vm:/home/vagrant/cloud /home/vagrant/cloud nfs">>/etc/fstab 
+          df -h
+        SHELL
+      end
+    end
+  
+  end
+  
