@@ -4,7 +4,7 @@
 Vagrant.configure("2") do |config|
   
     config.vm.define "master-vm" do | vm1| 
-        vm1.vm.hostname = "master-cluster"
+        vm1.vm.hostname = "master-vm"
         vm1.vm.box = "ubuntu/xenial64"
         vm1.vm.box_check_update = false
         
@@ -39,8 +39,6 @@ Vagrant.configure("2") do |config|
           echo 'Host 192.168.33.*' >> /home/vagrant/.ssh/config
           echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config
           echo 'UserKnownHostsFile /dev/null' >> /home/vagrant/.ssh/config
-  
-  
           echo -e " Installing NFS on Master Node"
           mkdir /home/vagrant/cloud	#Create the cloud folder to shared accross the cluster :) 
           chown vagrant:vagrant  /home/vagrant/cloud
@@ -49,12 +47,13 @@ Vagrant.configure("2") do |config|
           exportfs -a
           service nfs-kernel-server restart
           df -h
-
           echo "Creating Machine File in NFS"
           echo "master-vm">>/home/vagrant/cloud/machinefile
           echo "slave2-vm">>/home/vagrant/cloud/machinefile
           echo "slave3-vm">>/home/vagrant/cloud/machinefile
           echo "slave4-vm">>/home/vagrant/cloud/machinefile
+          
+
         SHELL
     end
   
@@ -106,6 +105,10 @@ Vagrant.configure("2") do |config|
           mount -t nfs master-vm:/home/vagrant/cloud /home/vagrant/cloud
           echo "master-vm:/home/vagrant/cloud /home/vagrant/cloud nfs">>/etc/fstab 
           df -h
+          echo -e "Downloading Sample MPI.C"
+          wget https://raw.githubusercontent.com/h3ct0rjs/FichaTecnica-ProyectoGrado/master/ClusterVagrant/ClusterMPICH/Version1/mpi_hello.c -O /home/vagrant/cloud/mpi_hello.c
+          
+
         SHELL
       end
     end
