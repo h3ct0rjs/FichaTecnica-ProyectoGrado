@@ -18,21 +18,28 @@ Vagrant.configure("2") do |config|
         vm1.vm.provision "shell", inline: <<-SHELL
           echo "#Cluster File">>/etc/hosts
           echo "192.168.33.10 master-vm">>/etc/hosts
-          for i in {2..4}; 
+          for i in {2..4};    
           do
               echo "192.168.33.2$i slave$i-vm">>/etc/hosts
           done
   
           echo "#SSH Keys Configuration"
-          ssh-keygen -t rsa -b 4096 -f /vagrant/id_rsa -N ""
+          
+          if [[ ! -e /vagrant/id_rsa ]]; then
+            ssh-keygen -t rsa -b 4096 -f /vagrant/id_rsa -N ""
+          fi
           (echo; cat /vagrant/id_rsa.pub) >> /home/vagrant/.ssh/authorized_keys
           cp /vagrant/id_rsa* /home/vagrant/.ssh/
           chown vagrant:vagrant /home/vagrant/.ssh/id_rsa*
           chmod -R 600 /home/vagrant/.ssh/authorized_keys
           chmod 400 /home/vagrant/.ssh/id_rsa
+          touch /home/vagrant/.ssh/config
           echo 'Host 192.168.33.*' >> /home/vagrant/.ssh/config
           echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config
           echo 'UserKnownHostsFile /dev/null' >> /home/vagrant/.ssh/config
+          echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config
+          chown vagrant:vagrant /home/vagrant/.ssh/config
+          chmod -R 600 /home/vagrant/.ssh/config
           echo -e " Installing NFS on Master Node"
           mkdir /home/vagrant/cloud	#Create the cloud folder to shared accross the cluster :) 
           chown vagrant:vagrant  /home/vagrant/cloud
@@ -77,7 +84,8 @@ Vagrant.configure("2") do |config|
           done
           cat /etc/hosts
           echo "#SSH Keys Configuration"
-  
+          echo "#SSH Keys Configuration"
+          
           if [[ ! -e /vagrant/id_rsa ]]; then
             ssh-keygen -t rsa -b 4096 -f /vagrant/id_rsa -N ""
           fi
@@ -86,11 +94,13 @@ Vagrant.configure("2") do |config|
           chown vagrant:vagrant /home/vagrant/.ssh/id_rsa*
           chmod -R 600 /home/vagrant/.ssh/authorized_keys
           chmod 400 /home/vagrant/.ssh/id_rsa
+          touch /home/vagrant/.ssh/config
           echo 'Host 192.168.33.*' >> /home/vagrant/.ssh/config
           echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config
           echo 'UserKnownHostsFile /dev/null' >> /home/vagrant/.ssh/config
-  
-  
+          echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config
+          chown vagrant:vagrant /home/vagrant/.ssh/config
+          
           echo -e "Installing NFS on Worker Node"
           apt install -y nfs-common
           mkdir /home/vagrant/cloud
