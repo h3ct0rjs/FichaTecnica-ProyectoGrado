@@ -13,12 +13,12 @@ Vagrant.configure("2") do |config|
           vb.cpus = 2
         end
         
-        vm1.vm.network "forwarded_port", guest: 80, host: 8081
+        #vm1.vm.network "forwarded_port", guest: 80, host: 8081
         vm1.vm.network "private_network", ip: "192.168.33.10"
         vm1.vm.provision "shell", inline: <<-SHELL
           echo "#Cluster File">>/etc/hosts
           echo "192.168.33.10 master-vm">>/etc/hosts
-          for i in {2..4};    
+          for i in {2..2};    
           do
               echo "192.168.33.2$i slave$i-vm">>/etc/hosts
           done
@@ -54,14 +54,14 @@ Vagrant.configure("2") do |config|
           echo "slave2-vm">>/home/vagrant/cloud/machinefile
           echo "slave3-vm">>/home/vagrant/cloud/machinefile
           echo "slave4-vm">>/home/vagrant/cloud/machinefile
-          
+          apt update
           apt-get -y install  mpich
           echo -e "Downloading Sample MPI.C"
           wget https://raw.githubusercontent.com/h3ct0rjs/FichaTecnica-ProyectoGrado/master/ClusterVagrant/ClusterMPICH/Version1/mpi_hello.c -O /home/vagrant/cloud/mpi_hello.c
         SHELL
     end
   
-    (2..3).each do |i|
+    (2..2).each do |i|
       config.vm.define "slave#{i}-vm" do | slave| 
         slave.vm.box = "ubuntu/xenial64"
         slave.vm.hostname = "slave#{i}-vm"
@@ -102,6 +102,7 @@ Vagrant.configure("2") do |config|
           chown vagrant:vagrant /home/vagrant/.ssh/config
           
           echo -e "Installing NFS on Worker Node"
+          apt update
           apt install -y nfs-common
           mkdir /home/vagrant/cloud
           chown vagrant:vagrant  /home/vagrant/cloud
@@ -112,6 +113,6 @@ Vagrant.configure("2") do |config|
         SHELL
       end
     end
-  
+
   end
   
