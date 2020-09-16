@@ -4,7 +4,7 @@
 Vagrant.configure("2") do |config|
     config.vm.define "master-vm" do | vm1| 
         vm1.vm.hostname = "master-vm"
-        vm1.vm.box = "ubuntu/xenial64"
+        vm1.vm.box = "c1b3rh4ck/mpicluster-base"
         vm1.vm.box_check_update = false
         
         vm1.vm.provider "virtualbox" do |vb|
@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
         vm1.vm.provision "shell", inline: <<-SHELL
           echo "#Cluster File">>/etc/hosts
           echo "192.168.33.10 master-vm">>/etc/hosts
-          for i in {2..2};    
+          for i in {2..5};    
           do
               echo "192.168.33.2$i slave$i-vm">>/etc/hosts
           done
@@ -49,21 +49,20 @@ Vagrant.configure("2") do |config|
           exportfs -a
           service nfs-kernel-server restart
           df -h
+          apt update
+          apt autoremove -y 
           echo "Creating Machine File in NFS"
           echo "master-vm">>/home/vagrant/cloud/machinefile
           echo "slave2-vm">>/home/vagrant/cloud/machinefile
           echo "slave3-vm">>/home/vagrant/cloud/machinefile
-          echo "slave4-vm">>/home/vagrant/cloud/machinefile
-          apt update
-          apt-get -y install  mpich
           echo -e "Downloading Sample MPI.C"
           wget https://raw.githubusercontent.com/h3ct0rjs/FichaTecnica-ProyectoGrado/master/ClusterVagrant/ClusterMPICH/Version1/mpi_hello.c -O /home/vagrant/cloud/mpi_hello.c
         SHELL
     end
   
-    (2..2).each do |i|
+    (2..5).each do |i|
       config.vm.define "slave#{i}-vm" do | slave| 
-        slave.vm.box = "ubuntu/xenial64"
+        slave.vm.box = "c1b3rh4ck/mpicluster-base"
         slave.vm.hostname = "slave#{i}-vm"
         slave.vm.box_check_update = false
   
@@ -78,7 +77,7 @@ Vagrant.configure("2") do |config|
           ping -c 5 192.168.33.10
           echo "#Cluster File">>/etc/hosts
           echo "192.168.33.10 master-vm">>/etc/hosts
-          for i in {2..4}; 
+          for i in {2..5}; 
           do
               echo "192.168.33.2$i slave$i-vm">>/etc/hosts
           done
@@ -103,13 +102,17 @@ Vagrant.configure("2") do |config|
           
           echo -e "Installing NFS on Worker Node"
           apt update
+          apt autoremove -y
           apt install -y nfs-common
           mkdir /home/vagrant/cloud
           chown vagrant:vagrant  /home/vagrant/cloud
           mount -t nfs master-vm:/home/vagrant/cloud /home/vagrant/cloud
           echo "master-vm:/home/vagrant/cloud /home/vagrant/cloud nfs defaults 0 0">>/etc/fstab 
           df -h
-          reboot
+          #reboot
+          #mpicc -o hello_worldmpi mpi_hello.c
+          #mpirun ./hello_worldmpi
+          #mpirun -np 10  -f machinefile ./hello_worldmpi
         SHELL
       end
     end
