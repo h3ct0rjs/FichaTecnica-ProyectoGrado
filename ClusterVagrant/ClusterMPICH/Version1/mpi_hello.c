@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     MPI_Get_processor_name(processor_name, &name_len);
 
     printf("Hello world from processor %s, rank %d out of %d processors\n",
-         processor_name, world_rank, world_size);
+         processor_name, myrank, nprocs);
     MPI_Finalize();     //garbage collection of all MPI vars. 
     return 0;
 }
