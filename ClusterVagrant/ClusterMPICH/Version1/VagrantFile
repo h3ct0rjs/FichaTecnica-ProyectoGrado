@@ -55,6 +55,8 @@ Vagrant.configure("2") do |config|
           echo "master-vm">>/home/vagrant/cloud/machinefile
           echo "slave2-vm">>/home/vagrant/cloud/machinefile
           echo "slave3-vm">>/home/vagrant/cloud/machinefile
+          echo "slave4-vm">>/home/vagrant/cloud/machinefile
+          echo "slave5-vm">>/home/vagrant/cloud/machinefile
           echo -e "Downloading Sample MPI.C"
           wget https://raw.githubusercontent.com/h3ct0rjs/FichaTecnica-ProyectoGrado/master/ClusterVagrant/ClusterMPICH/Version1/mpi_hello.c -O /home/vagrant/cloud/mpi_hello.c
         SHELL
