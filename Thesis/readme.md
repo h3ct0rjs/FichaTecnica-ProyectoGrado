@@ -4,10 +4,12 @@
 
 ### Title: _Despliegue  Automático  de  Infraestructuras  HPC  multinucleo  y  multimaquina  con maquinas virtuales utilizando Vagrant_
 
-This is the LaTex document for a previous document needed to request oficial accept from the computer systems engineering program, this is a template that was shared by Alejandro Rendon. 
+This is my LaTex final document, you will find all the text in the _main.tex_ file and the compile pdf version in compiled.pdf.
 
+## Folders 
+- img:  all the image used in the thesis.
 
 License 
---- 
+----
 
 MIT

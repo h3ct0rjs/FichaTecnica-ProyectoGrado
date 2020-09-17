@@ -1,0 +1,402 @@
+\documentclass[letter,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tabu}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[none]{hyphenat} 
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{tabu}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[none]{hyphenat} %No corte palabras
+\usepackage{cite} 			% para contraer referencias
+
+% idioma
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+% subitems enumerated
+\usepackage[pointedenum]{paralist} 
+
+%tablas
+\usepackage{booktabs}
+
+%rotar tablas
+\usepackage{rotating}
+
+%color tablas
+\usepackage{colortbl}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{cite}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+%espaciado
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.0ex plus0.5ex minus0.2ex}
+
+
+%margenes según n. icontec
+\usepackage{vmargin}
+\setmarginsrb           
+    { 2.5cm}  % left margin
+    { 2.5cm}  % top margcm
+    { 2.5cm}  % right margcm
+    { 2.5cm}  % bottom margcm
+    {   5pt}  % head height
+    { 2cm  }  % head sep
+    {   9pt}  % foot height
+    { 1.0cm}  % foot sep
+
+%Secciones: 
+% 1. Datos Personales Estudiantes [Hecho]
+% 2. Modalidad [Hecho]
+% 3. Titulo [Hecho]
+% 4. Introducción [Hecho]
+% 5. Planteamiento del Problema TODO
+% 6. Objetivo General [Hecho]
+% 7. Objetivos Específicos [Hecho]
+% 8. Metodología [Hecho]
+% 9. Cronograma TODO
+% 10. Presupuestos y Fuentes de Financiación [Hecho]
+% 11. Bibliografía TODO
+\spacing{1.2}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\includegraphics[width=1.6cm]{isc.jpg}}
+\chead{ \textbf{
+\hspace{1.5cm}UNIVERSIDAD TECNOLÓGICA DE PEREIRA
+\\\hspace{1.5cm}FACULTAD DE INGENIERÍAS
+\\\hspace{1.5cm}Programa de Ingeniería de Sistemas y Computación}
+}
+\lhead{\includegraphics[width=3.3cm]{identificador-horizontal.jpg}}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+
+\begin{document}
+\sloppy %No corte palabras
+\renewcommand{\arraystretch}{1.1} %Alto de las celdas
+%------------------------------------------
+%Datos Personales
+\begin{center}
+\begin{tabular}{|p{5.5cm}|p{9.5cm}|}
+\hline
+\multicolumn{2}{|c|}{\textbf{1. Datos Personales del Estudiante}}\\
+\hline
+\textbf{Código} & 1115421345 \\
+\hline
+\textbf{Nombres} & Héctor Fabio\\
+\hline
+\textbf{Apellidos} & Jiménez Saldarriaga\\
+\hline
+\textbf{email} & hfjimenez@utp.edu.co \\
+\hline
+\textbf{Teléfonos} &  +573175548245 \\
+\hline
+\end{tabular}
+\end{center}
+
+%Director de Proyecto de Grado
+\begin{center}
+\begin{tabular}{|p{5.5cm}|p{9.5cm}|}
+\hline
+\textbf{Nombre del Director} & Ramiro Andrés Barrios Valencia \\
+\hline
+\textbf{VoBo Director(Firma)} &  \\
+\hline
+\textbf{VoBo Comité Curricular} &  \\
+\hline
+\end{tabular}
+\end{center}
+%------------------------------------------
+%Modalidad
+\begin{center}
+\begin{tabular}{|p{5.5cm}|p{8.5cm}|p{0.5cm}|}
+\hline
+\multicolumn{3}{|c|}{\textbf{2. Modalidad}}\\
+\hline
+\multirow{3}{5cm}{\textbf{1. Trabajo de Investigación Formativa}} & Proyecto de Investigación &  \\ \cline{2-3}
+& Proyecto de Aplicación &  \textbf{X}\\ \cline{2-3}
+& Monografía &  \\ 
+\hline
+\multirow{3}{5cm}{\textbf{2. Práctica de Extensión}} & Práctica Universitaria &  \\ \cline{2-3}
+& Emprendimiento Empresarial &  \\ \cline{2-3}
+& Proyecto Social &  \\
+\hline
+\end{tabular}
+\end{center}
+\newpage
+%------------------------------------------
+%Titulo del Trabajo de Grado
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+\multicolumn{1}{|c|}{ \textbf{3. Título del Trabajo de Grado}}\\
+\hline
+Despliegue Automático de Infraestructuras HPC multinucleo y multimaquina con maquinas virtuales utilizando Vagrant\\
+\hline
+\end{tabular}
+\end{center}
+    
+%---------------------------------------
+%Introducción
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+\multicolumn{1}{|c|}{ \textbf{4. Introducción} }\\
+\hline
+La computación de alto rendimiento o HPC de sus siglas en ingles \textit{High Performance Computing} es un campo especial e importante de las ciencias de la computación que implica resolver problemas complejos que demandan grandes capacidades de recursos computacionales(1)(\textit{como ejemplo un gran de numero de procesadores, alta cantidad de Memoria, alta capacidad de almacenamiento}), es una de las mejores maneras de computar algoritmos en diferentes campos de la ciencia como la física, medicina, bioinformatica,  mecánica, química u otros problemas comunes de Big Data. Estas tareas y procesos son  grandes para ser realizados en una sola maquina, por ello se hace necesario construir lo que se denomina un \textit{Clúster} de computadores definido como un grupo de múltiples nodos o computadores que trabajan de manera conjunta y distribuida para cumplir con una meta. Debido a la naturaleza de múltiples computadores conectados entre si, existen diferentes modelos de computación paralela y distribuida que han sido desarrollados e implementados por la comunidad científica para la coordinación de los computadores pertenecientes a un Clúster, de manera que su uso sea eficiente y efectivo. Un modelo muy utilizado y popular es el \textit{paso de mensajes}, una técnica empleada en programación concurrente para aportar sincronización entre procesos y permitir la exclusión mutua, su diseño esta pensando para algoritmos y programas que exploten la existencia de múltiples procesadores en un Cluster. MPI es el estándar de facto preferido por la comunidad HPC a la hora de realizar implementaciones de paso de mensajes.
+
+Tradicionalmente, configurar un cluster de computadores, por ejemplo, un cluster MPI, es una tarea desafiante que requiere que estudiantes, aficionados, novatos y avanzados pasen un tiempo configurando los diferentes elementos del sistema y la red. Sin embargo, en los últimos años el avance del Cloud Computing y la implementación de metodologías ágiles que impulsan culturas como la DevOps han hecho que la automatización en todas las etapas sea masiva, gracias a esto 
+diferentes proyectos de software libre y de código abierto han visto la luz, como \strong{Vagrant}, una herramienta de código abierto que permite la creación y configuración de ambientes virtuales portables y ligeros. En este proyecto se presenta una implementación utilizando Vagrant para realizar  la construcción automática de un cluster MPI multinucleo y multimaquina.
+
+\\
+\hline
+\end{tabular}
+
+\end{center}
+%------------------------------------------
+%Problema
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+\multicolumn{1}{|c|}{ \textbf{5. Planteamiento del Problema} }\\
+\hline
+\textbf{Descripción}
+
+La infraestructura como código o IaC (Infraestructure as Code) es uno de los pilares fundamentales de la cultura DevOps, la IaC hace referencia a la práctica de poder administrar, aprovisionar, actualizar, monitorear y configurar la infraestructura TI de las empresas, se utilizan scripts en diferentes lenguajes de programación en lugar de configurar las maquinas de manera manual. La IaC trata todas las configuraciones de la infraestructura TI como código permite a las máquinas virtuales gestionarse de manera programada y automática, lo que elimina la necesidad de realizar configuraciones manuales por parte del personal a cargo de componentes individuales de hardware. Esto hace que la infraestructura sea muy moldeable, es decir, escalable y replicable siendo agnóstico a el hardware, proveedor de servidor cloud, además se utilizan las mismas practicas implementadas para la gestión y versionamiento del código de aplicaciones de software. 
+
+La implementación y construcción de un cluster MPI implica  tiempo y conocimiento de todos los elementos que lo componen, es necesario conocer un completo detalle de como realizar la instalación de cada uno de los componentes del cluster, algunas tareas que son repetitivas se puede automatizar implementando IaC ejemplo de ello es la creación de usuarios con sus niveles de privilegios, las configuraciones de seguridad, la configuración de servicios, las configuraciones de sistemas de archivos compartidos entre otras tareas repetitivas. Es necesario en un cluster MPI asegurar la inmutabilidad y homogeneidad en las configuraciones presentes en los nodos que lo componen.
+
+\hline
+\end{tabular}
+\end{center}
+
+%------------------------------------------
+%Objetivo General
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+\multicolumn{1}{|c|}{ \textbf{6. Objetivo General}}\\
+\hline
+Diseñar e implementar un conjunto de programas para el aprovisionamiento automático de un cluster computacional sobre máquinas virtuales, que soporten procesos con MPI.
+\\
+\hline
+\end{tabular}
+\end{center}
+
+%------------------------------------------
+%Objetivos Específicos
+
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+\multicolumn{1}{|c|}{ \textbf{7. Objetivos Específicos}}\\
+\hline
+\begin{itemize}
+	\item Obtener la lista de requerimientos, limitaciones, especificaciones para el diseño del aprovisionamiento automático utilizando Vagrant.
+	\item Desarrollar e implementar un sistema de archivos distribuido en el Clúster MPI.
+    \item Realizar pruebas de ejecución y funcionamiento del cluster.
+    \item Realizar pruebas de ejecución y desempeño multimaquina en el Clúster MPI compuesto por maquinas virtuales.
+\end{itemize} \\
+\hline
+\end{tabular}
+\end{center}
+
+%------------------------------------------
+%Metodología
+
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+\multicolumn{1}{|c|}{ \textbf{8. Metodología} }\\
+\hline
+\textbf{Fases de la Metodología}
+    \begin{enumerate}
+        \item Fase 1 : Recolección de requerimientos y análisis de la información
+        \item Fase 2 : Diseño e implementación de despliegues automáticos
+        \item Fase 3 : Diseño e implementación de pruebas de despliegue
+        \item Fase 4 : Documentación y conclusiones
+        \end{enumerate}\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline    
+        
+        3. Pruebas
+  
+    \textbf{Hipótesis}
+    Será posible construir un conjunto de programas que realicen el aprovisionamiento e instalación automática de un cluster MPI y sus nodos ?, Será que este entregable ayudara a los estudiantes del curso de HPC a entender como instalar un cluster MPI?
+    \par
+    
+    \textbf{Variables}
+    \begin{itemize}
+        \item Costos de Hardware
+        \item Tiempo de aprovisionamiento
+        \item Performance del cluster dado que son maquinas virtuales.
+    \end{itemize} \\
+
+    
+    \textbf{Diseño Metodológico}
+    \begin{itemize}
+        \item 
+
+  El enfoque y método seguido para la ejecución de este proyecto es \textit{“aprender haciéndolo”}, parte desde el aprendizaje de las características de Vagrant y la programación de los scripts en Ruby hasta hasta la parametrización y configuración de cada una de las tecnologías y software implicados para dejar el cluster de MPI funcionando, todo ello llevado a cabo desde un punto de vista práctico.
+        
+        
+    \end{itemize}\\  
+        
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+    
+    \begin{itemize}
+        
+        \item Tipo de investigación
+        
+        Basados en los puntos anteriores se considera que éste es un Proyecto de aplicación; ya que se pretende que por medio de la obtención de nuevos conocimientos por medio de investigación, se obtenga un resultado o entregable después de la culminación. 
+    
+        En esta investigación se utilizará un enfoque cuantitativo. Además de que se empleará el método científico.
+        
+        \item Estrategias
+        
+        Se llevará a cabo un conjunto de pruebas sobre el sistema, para establecer si cumple con las estimaciones del proyecto y si es funcional.
+    \end{itemize}\\  
+
+\hline
+\end{tabular}
+\end{center}
+
+%------------------------------------------
+%Cronograma
+
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+\multicolumn{1}{|c|}{ \textbf{9. Cronograma}}\\
+\hline
+
+A continuación se describe un esquema de las actividades que se desarrollarán durante el proyecto, cada una con su respectiva duración:
+    
+    \begin{center}
+    \begin{tabular}{|p{9.5cm}|p{0.4cm}|p{0.4cm}|p{0.4cm}|p{0.4cm}|p{0.4cm}|p{0.4cm}|}
+    \hline
+    \multicolumn{7}{|c|}{\textbf{Cronograma de Actividades}}\\
+    \hline
+    \textbf{Actividad / Tiempo(Meses)} & \textbf{1} & \textbf{2} & \textit{\textbf{3}} & \textbf{4} & \textbf{5} & \textbf{6} \\
+    \hline
+    Consultas e investigación sobre MPI, cluster y computación de alto rendimiento. & X &   &   &   &   &   \\
+    \hline
+    Investigación y Consulta de Infraestructura como Código, entendimiento del funcionamiento interno de Vagrant & X &   &   &   &   &   \\
+    \hline
+    Pruebas de aprovisionamiento automático de diferentes elementos de infraestructura con Vagrant & X &   &   &   &   &   \\
+    \hline
+    Implementación de algoritmos y scripts para la instalación de utilidades &  & X  &   &   &   &   \\
+    \hline
+    Pruebas de funcionamiento comunicación master-nodos &   &   & X &   &   &   \\
+    \hline
+    Ejecución de algoritmo en cluster &   &   &   & X &   &   \\
+    \hline
+    Elaboración de informe final &   &   &   &   & X &   \\
+    \hline
+    Entrega &   &   &   &   &   & X \\
+    \hline
+    \end{tabular}
+    \end{center} \\
+
+\hline
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+\multicolumn{1}{|c|}{ \textbf{10. Presupuesto y Fuentes de Financiación}}\\
+\hline
+
+\textbf{Recursos Humanos}
+\begin{itemize}
+    \item Director de proyecto.
+\end{itemize}\\
+\textbf{Recursos Físicos}
+\item Laboratorio Sirius CIDT
+    \item Cluster Lovelace, Bloque L.
+    \item Computador Tesista, Servidores Físicos a disposición tesista.
+    \item Locaciones Grupo de Investigación Sirius. \par
+    Ingeniería de Sistemas y Computación. Universidad Tecnológica de Pereira.
+\hline
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+	A continuación un valor estimado para los recursos considerados en el proyecto:
+	\begin{center}
+    \begin{tabular}{|p{2.5cm}|p{3cm}|p{2cm}|p{2cm}|p{3cm}|}
+    \hline
+    \textbf{Recurso Humano} & \textbf{Costo(Peso Colombiano) / Hora } & \textbf{Número Horas} & \textbf{Total} & \textbf{Fuente Financiadora} \\
+    \hline
+    Investigador (Tesista   ) & 6.500 & 200 & 1.300.000 & Universidad \\
+    \hline    \hline
+    Director / Asesor & 38.000 & 80 & 3.040.000 & Universidad \\
+    \hline
+    \textbf{Compra o Alquiler de Maquinaria y Equipos} & \textbf{Costo(Peso Colombiano) } & \textbf{Cantidad} & \textbf{Total} & \textbf{Fuente Financiadora} \\
+    \hline
+    Computador Thinkpad X1 6TH, procesador i7 8GEN, 1TB DD y 16GB RAM & 8.100.000 & 1 & 8.100.000 & Tesista  \\
+    \hline
+
+    \textbf{Fungibles} & \textbf{Costo(Peso Colombiano) } & \textbf{Cantidad} & \textbf{Total} & \textbf{Fuente Financiadora} \\
+    \hline
+    Papelería y otros & 50.000 &  & 50.000 & Tesista \\
+    \hline
+    Servicios públicos & 130.000 &  & 130.000 & Tesista  \\
+    \hline
+    \textbf{Costo Total del Proyecto} &  &  & 12.620.000 &  \\
+    \hline
+    \end{tabular}
+    \end{center}\\
+\hline
+\end{tabular}
+\end{center}
+%------------------------------------------
+%Bibliografía
+\begin{center}
+\begin{tabular}{|p{15.5cm}|}
+\hline
+\multicolumn{1}{|c|}{ \textbf{11. Bibliografía}}\\
+\hline
+\\
+\begin{itemize}
+    \item Resource selection and allocation for dynamic adaptive computing in heterogeneous clusters, John U. Duselis The Donald Bren School of Information and Computer Science, University of California, Irvine, Irvine, CA 92697; E. Enrique Cauich ; Richert K. Wang ; Isaac D. Scherson
+    \item Leveraging a Cluster-Booster Architecture for Brain-Scale Simulations, Conference Paper, Pramod Kumbhar,Michael Hines, Aleksandr Ovcharenko, Damian A. Mallon, James King, Florentino Sainz, Felix Schürmann, Fabien Delalondre
+    \item Infrastructure As Code,  Kief Morris
+    \item Vagrant: Up and Running: Create and Manage Virtualized Development Environments
+    \item Infrastructure as Code: Managing Servers in the Cloud
+    \item Site Reliability Engineering: How Google Runs Production Systems
+    
+\end{itemize}
+\\
+\hline
+\end{tabular}
+\end{center}
+%------------------------------------------
+
+\end{document}

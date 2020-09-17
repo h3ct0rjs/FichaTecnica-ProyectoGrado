@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# hfjimenez@utp.edu.co, Proyecto de Grado. 
+# dot expansion for create tree slave nodes.
+
+Vagrant.configure("2") do |config|
+
+    (1..3).each do |i|
+      config.vm.define "slave#{i}-vm" do | slave| 
+        slave.vm.box = "c1b3rh4ck/mpicluster-base"
+        slave.vm.hostname = "slave#{i}-vm"
+        slave.vm.box_check_update = false
+  
+        slave.vm.provider "virtualbox" do |vb|
+          vb.gui = false
+          vb.memory = "512"
+          vb.cpus = 1
+        end
+
+        slave.vm.network "private_network", ip: "192.168.33.2#{i}"
+        slave.vm.provision "shell", inline: <<-SHELL
+          echo -e "Testing Multiple Node Allocation"
+        SHELL
+      end
+    end
+
+  end
+  
