@@ -16,6 +16,15 @@ Vagrant.configure("2") do |config|
         #vm1.vm.network "forwarded_port", guest: 80, host: 8081
         vm1.vm.network "private_network", ip: "192.168.33.10"
         vm1.vm.provision "shell", inline: <<-SHELL
+          systemctl stop apt-daily.service
+          systemctl kill --kill-who=all apt-daily.service
+
+          # wait until `apt-get updated` has been killed
+          while ! (systemctl list-units --all apt-daily.service | egrep -q '(dead|failed)')
+          do
+            sleep 1;
+          done
+          
           echo "#Cluster File">>/etc/hosts
           echo "192.168.33.10 master-vm">>/etc/hosts
           for i in {2..5};    
@@ -53,6 +62,10 @@ Vagrant.configure("2") do |config|
           apt autoremove -y 
           echo "Creating Machine File in NFS"
           echo "master-vm">>/home/vagrant/cloud/machinefile
+          for i in {2..5};    
+          do
+              echo "slave$i-vm">>/home/vagrant/cloud/machinefile
+          done
           echo "slave2-vm">>/home/vagrant/cloud/machinefile
           echo "slave3-vm">>/home/vagrant/cloud/machinefile
           echo "slave4-vm">>/home/vagrant/cloud/machinefile
@@ -76,6 +89,15 @@ Vagrant.configure("2") do |config|
 
         slave.vm.network "private_network", ip: "192.168.33.2#{i}"
         slave.vm.provision "shell", inline: <<-SHELL
+          systemctl stop apt-daily.service
+          systemctl kill --kill-who=all apt-daily.service
+
+          # wait until `apt-get updated` has been killed
+          while ! (systemctl list-units --all apt-daily.service | egrep -q '(dead|failed)')
+          do
+            sleep 0.5;
+          done
+          
           ping -c 5 192.168.33.10
           echo "#Cluster File">>/etc/hosts
           echo "192.168.33.10 master-vm">>/etc/hosts
@@ -105,6 +127,7 @@ Vagrant.configure("2") do |config|
           echo -e "Installing NFS on Worker Node"
           apt update
           apt autoremove -y
+          apt update
           apt install -y nfs-common
           mkdir /home/vagrant/cloud
           chown vagrant:vagrant  /home/vagrant/cloud

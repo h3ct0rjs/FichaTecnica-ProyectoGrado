@@ -121,6 +121,20 @@
 \begin{document}
 \portada
 \contraportada
+\newpage
+	\clearpage
+    \begin{center}
+    \thispagestyle{empty}
+    \vspace*{\fill}
+    \textit{A Dios primeramente por permitirme estar en el buen camino y finalizar este gran paso en mi educación, a mis padres quienes me dieron todo su apoyo, amor infinito y fortaleza en todos los momentos mas difíciles de mi carrera. A mis hermanas, Leidy, Ana, y Cindy quienes son el motor para ser mi mejor version cada dia. A mi novia, Melissa quien siempre me apoyo incondicionalmente.}
+    \begin{flushright}
+    \textit{\textbf{Héctor Fabio Jiménez Saldarriaga}}
+    \end{flushright}
+    
+    \vspace*{\fill}
+    \end{center}
+\clearpage
+\newpage
 %\contraportada
 %Tabla de Contenido
 	\renewcommand{\tablename}{Tabla}
@@ -140,7 +154,7 @@
     %Introducción al tema general
 	\section{Introducción}
 	
-	La computación de alto rendimiento o HPC de sus siglas en inglés \textit{High Performance Computing} es un campo especial e importante de las ciencias de la computación que implica resolver problemas complejos que demandan grandes capacidades de recursos computacionales(1)(\textit{como ejemplo un gran de número de procesadores, alta cantidad de Memoria, alta capacidad de almacenamiento}), es una de las mejores maneras de computar algoritmos en diferentes campos de la ciencia como la física, medicina, bioinformática,  mecánica, química u otros problemas comunes de Big Data. Estas tareas y procesos son  grandes para ser realizados en una sola máquina, por ello se hace necesario construir lo que se denomina un \textit{Clúster} de computadores definido como un grupo de múltiples nodos o computadores que trabajan de manera conjunta y distribuida para cumplir con una meta. 
+	La computación de alto rendimiento o HPC de sus siglas en inglés \textit{High Performance Computing} es un campo especial e importante de las ciencias de la computación que implica resolver problemas complejos que demandan grandes capacidades de recursos computacionales(1)(\textit{como ejemplo un gran de número de procesadores, alta cantidad de Memoria, alta capacidad de almacenamiento}), es una de las mejores maneras de computar algoritmos en diferentes campos de la ciencia como la física, medicina, bioinformática,  mecánica, química u otros problemas comunes de Big Data. Estas tareas y procesos son  grandes para ser realizados en una sola máquina, por ello se hace necesario construir lo que se denomina un \textit{Clúster} de computadores definido como un grupo de múltiples nodos o computadores que trabajan de manera conjunta y distribuida para cumplir con una meta común. 
 	
 	Debido a la naturaleza de múltiples computadores conectados entre sí, existen diferentes modelos de computación paralela y distribuida que han sido desarrollados e implementados por la comunidad científica para la coordinación de los computadores pertenecientes a un Clúster, de manera que su uso sea eficiente y efectivo. Un modelo muy utilizado y popular es el \textit{paso de mensajes}, una técnica empleada en programación concurrente para aportar sincronización entre procesos y permitir la exclusión mutua; su diseño esta pensando para algoritmos y programas que exploten la existencia de múltiples procesadores en un Clúster. MPI es el estándar de facto preferido por la comunidad HPC a la hora de realizar implementaciones de paso de mensajes.
 
@@ -246,11 +260,12 @@
     \begin{itemize}
          \item \textit{Hypervisor:}Un hypervisor, conocido también como monitor de máquina virtual (\textit{Virtual Machine Manager}), es un software que crea y ejecuta máquinas virtuales (VMs) y que, además, aísla el sistema operativo y los recursos del hypervisor de las máquinas virtuales. El rol importante de este herramienta es permitir realizar todas las actividades de administración y gestión de las máquinas virtuales.\cite{hypervisor}
         
-        \item \textit{máquina Virtual:} Una máquina virtual (VM  del ingles Virtual Machine) es un entorno virtual que funciona como sistema informático virtual con su propia CPU, memoria, interfaz de red y almacenamiento, pero se crea en un sistema de hardware físico, en el que está instalado un hypervisor libre o comercial al que se llama "host", y las VMs que utilizan sus recursos se llaman "guests".  Las VMs se encuentran aisladas del resto del sistema, pero puede haber varias VMs en una sola pieza de hardware, como un servidor.\cite{virtualmachine}
+        \item \textit{máquina Virtual:} Una máquina virtual (VM  del ingles Virtual Machine) es un entorno virtual que funciona como sistema informático virtual con su propia CPU, memoria, interfaz de red y almacenamiento, pero se crea en un sistema de hardware físico, en el que está instalado un hypervisor libre o comercial al que se denomina como maquina \textit{host}, y las VMs que utilizan sus recursos se denominan \textit{guest}.  Las VMs se encuentran aisladas del resto del sistema, pero puede haber varias VMs en una sola pieza de hardware, como un servidor.\cite{virtualmachine}
         
         \item \textit{Message Passage Interface:} Es el estándar que define la sintaxis, la semántica y demás elementos de la especificación MPI para  una interfaz común de funciones implementadas para el paso de mensajes. 
         En la actualidad MPI cuenta con una conjunto de funciones convergentes en una librería. El estándar MPI es construido a través de un proceso abierto y comunitario alrededor de todo el mundo, conformada por investigadores, científicos, desarrolladores de aplicaciones y múltiples vendedores que trabajan en problemas de computación de alto desempeño y paradigmas de procesamiento paralelo. Este estándar busca explotar el uso de la programación paralela y el paso de mensajes entre procesos, posibilitando utilizar todos los cores existentes en un procesador o en máquinas multiprocesador.
-        Según el MPI-2019-Draft-report\cite{MpiDraf} [2] MPI no es un lenguaje de programación en sí, y todas las operaciones MPI son expresadas como funciones, subrutinas o métodos, que definen de manera clara todos los mecanismos para un estándar de paso de mensajes.  
+        Según el MPI-2019-Draft-report\cite{MpiDraf} [2] MPI no es un lenguaje de programación en sí, y todas las operaciones MPI son expresadas como funciones, subrutinas o métodos, que definen de manera clara todos los mecanismos para un \textbf{
+        estándar} de paso de mensajes.  
         
         
         \item \textit{Network File System:} 
@@ -263,7 +278,7 @@
     %Delimitación
     \section{Alcance}
     
-    Este proyecto tiene como fin realizar la implementación de scripts que permitan automatizar la creación de un clúster HPC que permita realizar la ejecución de aplicaciones y algoritmos desarrollados utilizando MPI mediante el uso de máquinas virtuales automatizadas utilizando la herramienta Open Source \textbf{Vagrant},  una herramienta de línea de comandos  que permite administrar el ciclo de vida de máquinas virtuales de manera consistente y maximizar la productividad soportando múltiples hypervisores como VirtualBox, VMware, AWS, entre otros.
+    Este proyecto tiene como fin realizar la implementación de scripts que permitan automatizar la creación de un clúster HPC que permita realizar la ejecución de aplicaciones y algoritmos desarrollados utilizando MPI mediante el uso de máquinas virtuales automatizadas utilizando la herramienta Open Source \textbf{Vagrant},  una herramienta de línea de comandos  que permite administrar el ciclo de vida de máquinas virtuales de manera consistente y maximizar la productividad soportando múltiples hypervisores y proveedores como VirtualBox, VMware, Hyper-v, AWS, GCP, entre otros.
     
     Pensando en futuras implementaciones, se tiene la posibilidad de que a partir de los resultados que se obtuvieron en el presente proyecto, se podría implementar una configuración para otros proveedores de la nube como AWS o Google Cloud Platform. 
     \section{Diseño Metodológico}
@@ -295,9 +310,9 @@
     
     \section{Implementación}
     \subsection{Configuraciones Iniciales y Prerrequisitos}
-    Para realizar este proyecto de grado, las instalaciones de pruebas se implementaron utilizando el sistema operativo Windows 10 Professional, junto con la herramienta de Windows Subsystem for Linux (WSL2).
+    Para realizar este proyecto de grado, las instalaciones de pruebas se implementaron utilizando el sistema operativo Windows 10 Professional version de 64 bits, junto con la herramienta de Windows Subsystem for Linux (WSL2).
     
-    El computador portátil utilizado para hacer el desarrollo de este trabajo de grado tiene las siguientes características : 
+    El computador portátil utilizado para hacer el desarrollo de este trabajo de grado tiene las siguientes características de hardware : 
     \begin{itemize}
         \item Marca : Lenovo
         \item Referencia : Thinkpad X1 6th
@@ -379,7 +394,7 @@
         \label{fig:va0}
     \end{figure}
     
-    Al momento de crear este documento Vagrant se encuentra en la versión 2.2.7. Durante el desarrollo de este proyecto el autor tuvo la posibilidad de realizar diferentes charlas en varios meetups del país: 
+    Al momento de crear este documento Vagrant se encuentra en la versión 2.2.7. Durante el desarrollo de este proyecto el autor de esta tesis tuvo la posibilidad de realizar diferentes charlas en varios meetups del país: 
     
     \begin{itemize}
         \item Manizales Tech Talks
@@ -440,18 +455,18 @@
     Al cumplir con los prerrequisitos de instalación de Vagrant y VirtualBox en el computador, es hora de proceder a correr un ejemplo muy básico donde se puede observar que el aprovisionamiento funciona adecuadamente entre Vagrant(\textit{ automatización descriptiva}) y VirtualBox(\textit{ hypervisor}).
     
     Esta prueba consiste en lanzar una máquina virtual utilizando ambas herramientas. Para realizarlo Vagrant solo necesita tener la instancia del archivo de configuración, este es llamado (\textbf{“Vagrantfile”}), su función primaria es describir el tipo de máquina requerida por proyecto y la definición de como aprovisiona la(s) máquina(s) virtuales. Este archivo es llamado así debido a que es el nombre literal del archivo que Vagrant va a intentar leer al momento de ejecutar el comando \textbf{\texttt{vagrant up}}. 
-    Es necesario mencionar que Vagrant corre un solo archivo de configuración por proyecto, además este tendrá que ser versionado utilizando una herramienta como  \textit{Git}, de esta manera, un nuevo desarrollador que se integre al equipo simplemente tendrá que clonar el repositorio del proyecto y ejecutar \texttt{vagrant up} para tener el entorno de desarrollo montado y funcionando en cuestión de minutos. Por defecto, Vagrant utiliza VirtualBox como motor de máquinas virtuales o \textbf{provider}, aunque existe la opción de utilizar otros providers como VMWare Workstation (Windows) o VMWare Fusion (MacOS X) con un plugin de pago, AWS EC2 Web Services, Compute Engine de Google Cloud Platform.
+    Es necesario mencionar que Vagrant corre un solo archivo de configuración por proyecto, además sera opcional que el archivo sea versionado utilizando una herramienta como  \textit{Git}, de esta manera, un nuevo desarrollador que se integre al equipo simplemente tendrá que clonar el repositorio del proyecto y ejecutar \texttt{vagrant up} para tener el entorno de desarrollo montado y funcionando en cuestión de minutos. Por defecto, Vagrant utiliza VirtualBox como motor de máquinas virtuales o \textbf{provider}, aunque existe la opción de utilizar otros providers como VMWare Workstation (Windows) o VMWare Fusion (MacOS X) con un plugin de pago, AWS EC2 Web Services, Compute Engine de Google Cloud Platform.
     
-    La sintaxis de los archivos de Vagrant utilizan Ruby, pero el conocimiento del lenguaje de programación no es necesario para hacer las modificaciones, dado que este trata la descripción de los recursos de una manera simple y concisa. 
+    La sintaxis de los archivos de Vagrant utilizan como lenguaje de programación Ruby, pero el conocimiento del lenguaje de programación no es necesario para hacer las modificaciones, dado que este trata la descripción de los recursos de una manera simple y concisa. 
     
     En los ejemplos de las Figuras  Figura.\ref{fig:vagrantfile1},  Figura.\ref{fig:vafile2} se puede observar claramente la descripción de hardware.
     
     El flujo de trabajo de vagrant está resumido en la figura Figura.\ref{fig:flow}, de la que se pueden resaltar los siguientes pasos: 
     \begin{enumerate}
         \item El desarrollador posee el archivo descriptivo \textbf{“Vagrantfile”} y ejecuta el comando \textbf{\texttt{vagrant up}}
-        \item Vagrant, con su analizador léxico validará las descripciones de VirtualBox. También revisa si es necesario ejecutar algún provisioner\footnote{Los provisioners son opcionales, pero son de un uso común en la creación de entorno y despliegues de máquinas virtuales} como un script de bash, ansible, puppet entre otros; si no, este creará todo lo necesario con el hypervisor.
+        \item Vagrant, con su analizador léxico validará las descripciones del código para Virtualbox. También revisa si es necesario ejecutar algún provisioner\footnote{Los provisioners son opcionales, pero son de un uso común en la creación de entorno y despliegues de máquinas virtuales} como un script de bash, ansible, puppet entre otros; si no, este creará todo lo necesario con el hypervisor.
         \item La máquina virtual estará disponible para el desarrollo.
-        \item Mediante ssh el desarrollador tendrá acceso a todo el entorno.
+        \item Mediante \textbf{ssh} el desarrollador tendrá acceso a todo el entorno \textbf{\texttt{vagrant ssh box}}
     \end{enumerate}
     $$\\$$
     \begin{figure}[H]
@@ -465,7 +480,7 @@
         \caption{Ejemplo de Vagrantfile, versión 1. }
         \label{fig:vagrantfile1}
     \end{figure}
-    
+    Un ejemplo de para esta prueba puede ser encontrado en Github,  \url{https://github.com/h3ct0rjs/FichaTecnica-ProyectoGrado/blob/master/ClusterVagrant/SingleMPIMachine/Vagrantfile}
     \begin{figure}[H]
         \includegraphics[scale=1.2]{img/provision/vagrantbox.png}
         \caption{Ejemplo de Vagrantfile, versión 2. }
@@ -478,12 +493,14 @@
         \caption{resultado de importación y creación de vagrant up.}
         \label{fig:va6}
     \end{figure}
+    La primera vez que se realiza \textbf{\texttt{vagrant up}}, se realiza la validación de si la imagen base se encuentra \footnote{ver linea de código 5 de la Figura 17}. Si Vagrant no logra detectarla, el realiza la descarga desde un repositorio de imágenes conocido como vagrantcloud. Seguidamente realiza la configuración de los parámetros de memoria, cpu y red puestos en la maquina virtual. Para este proyecto de grado, se realizaron múltiples pruebas, por sugerencias del director de proyecto y como buena practica para minimizar los tiempos de aprovisionamiento, se realizo la creación de una imagen base que ya contiene los archivos binarios de MPI pues durante las pruebas el tiempo que tardaba el cluster en levantar todos los nodos esclavos mientras instalaba las múltiples dependencias era muy alto. \footnote{La imagen base puede ser encontrada en \url{https://app.vagrantup.com/c1b3rh4ck/boxes/mpicluster-base}. }
     
     \begin{figure}[H]
         \includegraphics[scale=1]{img/provision/running.png}
         \caption{Aprovisionamiento Exitoso, Estado de la máquina virtual.}
         \label{fig:va6}
     \end{figure}
+    Cuando todo el proceso de aprovisionamiento termina, podremos comprobar el estado utilizando \textbf{\texttt{vagrant status}}, en el cual se debe observar lo que se presenta en la Figura 19 con status de \textbf{\textit{running}}. 
     \begin{center}
     \begin{figure}[H]
         \includegraphics[scale=1]{img/provision/running2.png}
@@ -491,8 +508,9 @@
         \label{fig:va6}
     \end{figure}
     \end{center}
+    Finalmente la conexion a la maquina virtual se ejecuta lanzando el comando \textbf{\texttt{vagrant ssh }}.
     \subsection{Pruebas de Networking y Direccionamiento}
-    Oracle VM VirtualBox provee hasta 8 tarjetas virtuales Ethernet PCI para cada máquina virtual. Para cada tarjeta, se puede seleccionar individualmente lo siguiente: 
+    Oracle VM VirtualBox provee hasta 8 tarjetas virtuales Ethernet PCI para cada máquina virtual. Cada tarjeta, se puede seleccionar individualmente lo siguiente: 
     \begin{itemize}
         \item Hardware que será virtualizado.
         \item Modo de Virtualización que la tarjeta usará en su modo de operación con respecto al hardware de red en la máquina host entre los modos Nat, Bridge, Red Interna.
@@ -517,6 +535,7 @@
     \begin{itemize}
         \item La conexión entre la máquina virtual y el Sistema operativo se puede establecer en ambos sentidos, según las flechas indicativas. 
         \item La conexión entre múltiples máquinas virtuales se puede realizar en ambos sentidos.
+        \item La conexión con redes que creemos en Virtualbox no se puede alcanzar.
     \end{itemize}
     
     \begin{center}
@@ -527,7 +546,7 @@
         \end{figure}
     \end{center}
    
-   Además de los diferentes modos provistos por VirtualBox, este también provee un administrador de redes, donde se permite administrar los segmentos y las redes creadas. En la Figura.\ref{fig:net2} se observa que cada vez que se crea una red LAN utilizando VirtualBox Network Manager este crea a su vez los dispositivos de red virtuales en el sistema operativo host. Si estos dispositivos no se encuentran creados al momento de aprovisionar el clúster, Vagrant realiza su creación de manera automática.
+   Además de los diferentes modos provistos por VirtualBox, este también provee un administrador de redes, donde se permite administrar los segmentos y las redes creadas virtualmente. En la Figura.\ref{fig:net2} se observa que cada vez que se crea una red LAN utilizando VirtualBox Network Manager este crea a su vez los dispositivos de red virtuales en el sistema operativo host. Si estos dispositivos no se encuentran creados al momento de aprovisionar el clúster, Vagrant realiza su creación de manera automática.
     
     \begin{figure}[H]
         \includegraphics[scale=1]{img/networking/networking2.png}
@@ -535,11 +554,11 @@
         \label{fig:net2}
     \end{figure}
     \subsubsection{Opciones de Configuración Programáticas Vagrant}
-    Vagrant a través de su declaración programática expone opciones de alto nivel para manipular las configuraciones de las tarjetas de red y las redes creadas por VirtualBox, entre ellas: 
+    Vagrant a través de su declaración programática expone opciones de alto nivel para manipular las configuraciones de las tarjetas de red y las redes creadas por VirtualBox,evitandonos tener que realizar la configuracion manualmente en la interfaz grafica de Virtualbox,  entre ellas: 
     \begin{itemize}
         \item Configuraciones de PortForwading.
         \item Configuraciones de múltiples segmentos de red por tarjeta virtual.
-        \item Creación de redes privadas.
+        \item Creación de subredes privadas.
     \end{itemize}
     
     
@@ -571,8 +590,9 @@
         \label{fig:forward2}
     \end{figure}
     
+    Una configuracion de estas pruebas de networking puede ser encontrada en Github, \url{https://github.com/h3ct0rjs/FichaTecnica-ProyectoGrado/blob/master/ClusterVagrant/NetworkingLab/Vagrantfile}.
     \subsection{Aprovisionamiento de Múltiples Maquinas Virtuales}
-    Vagrant permite realizar la instanciación de la cantidad que se desee de máquinas virtuales en un mismo Vagrantfile. Nótese cómo en la Figura.\ref{fig:provision1} la definición quiere crear dos máquinas virtuales al mismo tiempo: una con el nombre de \textbf{web} y otra con el nombre \textbf{db}, la primera basada en una imagen de \textit{apache} y la segunda de \textit{mysql}.
+    Vagrant además de las opciones anteriores también permite realizar la instanciación de la cantidad que se desee de máquinas virtuales en un mismo Vagrantfile. Nótese cómo en la Figura.\ref{fig:provision1} la definición quiere crear dos máquinas virtuales al mismo tiempo: una con el nombre de \textbf{web} y otra con el nombre \textbf{db}, la primera basada en una imagen de \textit{apache} y la segunda de \textit{mysql}.
     \begin{figure}[H]
         \includegraphics[scale=0.9]{img/cluster/multi1.png}
         \caption{Defunción de Múltiples máquinas virtuales, \textbf{\texttt{vagrant ssh}}.}
@@ -586,6 +606,12 @@
         \caption{Conexión a la máquina virtual aprovisionada, \textbf{\texttt{vagrant ssh}}.}
         \label{fig:provision2}
     \end{figure}
+    
+    Una configuracion de estas pruebas de aprovisionamiento multiple puede ser encontrada en Github,
+    \begin{itemize}
+        \item \url{https://github.com/h3ct0rjs/FichaTecnica-ProyectoGrado/blob/master/ClusterVagrant/MultipleNodes/SimpleMultipleNodes/VagrantFile}.
+        \item \url{https://github.com/h3ct0rjs/FichaTecnica-ProyectoGrado/blob/master/ClusterVagrant/MultipleNodes/VarMultipleNodes/VagrantFile}.
+    \end{itemize}
     
     \subsection{Sistema de Archivos Compartido clúster MPI}
     El protocolo NFS ha existido durante casi mas de 20 años desde su primer RFC publico \textit{rfc1094} \cite{nfsv1}, es el protocolo de intercambio de archivos de red de facto para sistemas operativos Unix y Gnu/Linux. El protocolo NFS se encuentra en su cuarta versión y esta a cargo de investigadores de todo el mundo, con desarrolladores y científicos de todo el mundo. El protocolo NFS proporciona acceso remoto y transparente a archivos y recursos compartidos en red, este está diseñado para ser portable y multiplataforma además de ser soportado en diferentes tipos de máquinas, sistemas operativos, arquitecturas de redes y protocolos de transporte. 
@@ -646,30 +672,76 @@
         \item Deshabilitar servicios innecesarios del sistema, que vienen por defecto.
         
         \textit Realizar un listado de usuarios permitidos para la ejecución de programas MPI en cada uno de los nodos del clúster y se configuran las llaves de seguridad comunes para alcanzar el nodo maestro.
-        
     \end{itemize}
-    
+    \newpage
     \subsection{Pruebas de clúster MPI Multimaquina}
-    Finalmente después de haber realizado la comprensión total de los diferentes elementos que se deben configurar a continuación en la Figura.\ref{fig:clus0} se muestra una arquitectura de nuestro cluster  
-    \begin{figure}[H]
-            \includegraphics[scale=1.5]{img/cluster/cluster1.png}
+    Finalmente después de haber realizado la comprensión total de los diferentes elementos que se configuraron a continuación en la Figura.\ref{fig:clus0} se muestra una arquitectura de nuestro cluster MPI Multimaquina y Multinucleo.
+    \begin{figure}[H]\centering
+            \includegraphics[scale=1.2]{img/cluster/cluster1.png}
             \caption{Arquitectura funcional cluster MPI, virtual switch .}
             \label{fig:clus0}
     \end{figure}
-    Como se observa en la Figura.\ref{fig:clus0} tenemos una arquitectura compuesta por un nodo maestro de nombre \textbf{\texttt{Master-vm}} con dirección ipv4 192.168.33.10 perteneciente al segmento de red 192.168.33.0/24 en esta maquina virtual se instala el servidor de archivos NFSv4 (\textit{ver Figura.\ref{fig:nfsserver}, Figura.\ref{fig:net3}}), 
+    Como se observa en la Figura.\ref{fig:clus0} tenemos una arquitectura compuesta por un nodo maestro de nombre \textbf{\texttt{Master-vm}} con dirección ipv4 192.168.33.10 perteneciente al segmento de red 192.168.33.0/24 en esta maquina virtual se instala el servidor de archivos NFSv4 (\textit{ver Figura.\ref{fig:nfsserver}, Figura.\ref{fig:net3}}), para las pruebas realizadas a este nodo de ahora en adelante se le asignaron 2 cores de CPU, 1GB de memoria ram y también un segmento de red privada. De manera programática es necesario que el nodo maestro tenga acceso a todos los nodos \textbf{\texttt{Slave\strong{i}-vm}} que serán de apoyo prestando sus recursos en la solución a tareas que se corran en el cluster. Para lograr esto fue necesario implementar un cliente y servidor \textit{ssh} disponible con el gestor de paquetes del sistema operativo \texttt{apt-get} el paquete mas conocido \textit{OpenSSH-Server} configurando un par de llaves comunes a todos los nodos, en las pruebas realizadas fue necesario al momento de aprovisionar los nodos deshabilitar una opción de las maquinas que se encarga de validar en la primera conexión si existe fingerprint disponible, además esto nos evita que durante el aprovisionamiento nos genere un error de conexión.
+    \begin{figure}[H]\centering
+            \includegraphics[scale=1.4]{img/provision/checkeodessh.png}
+            \caption{StrictHostChecking, Conexiones SSH deshabilitado .}
+            \label{fig:checkssh}
+    \end{figure}
+    También durante los experimentos realizados, se nota que en algunos momentos el cluster MPI no funcionaba debido a la no instalación correcta del cliente NFS y servidor. Se realizo una revisión detalla de los diferentes problemas encontrados en la salida de Vagrant, observando que el sistema operativo Ubuntu la primera vez que inicializa utiliza un proceso denominado cloud-init el cual a su vez llame una primera actualización programada de paquetes. Al estar esta tarea en ejecución se presenta un interbloqueo el cual no nos permite realizar la instalación con el comando \texttt{apt}. 
+    \begin{figure}[H]\centering
+            \includegraphics[scale=1.2]{img/provision/problemaapt.png}
+            \caption{Interbloqueo de procesos, Fallo de Instalación de Servicio NFS .}
+            \label{fig:checkssh}
+    \end{figure}
+    En la consulta realizada, se determina que la mejor manera de resolver este inconveniente es deshabilitar el servicio de \textbf{systemd apt-daily.service} al momento de lanzar la ejecución y espera que no exista ningún otro proceso haciendo uso de los archivos protegidos usados por \texttt{apt}.
+    \begin{figure}[H]\centering
+            \includegraphics[scale=1.4]{img/provision/problemaapt1.png}
+            \caption{Solución Programática.Se Deshabilita Servicio problematico.}
+            \label{fig:checkssh}
+    \end{figure}
     
-    \subsection{Ejecución sobre algoritmos clúster MPI}
+    Para poner en marcha el cluster es necesario realizar la ejecución de los comandos que se muestran en la siguiente figura. 
+    
+    \begin{figure}[H]\centering
+            \includegraphics[scale=1.4]{img/provision/version1fin.png}
+            \caption{Lanzamiento de Cluster en Marcha.}
+            \label{fig:checkcluster1}
+    \end{figure}
+    
+    \begin{figure}[H] \centering
+            \includegraphics[scale=1.3]{img/provision/version1fin2.png}
+            \caption{Lanzamiento de Cluster en Marcha.Todos los nodos se encuentran en ejecución.}
+            \label{fig:checkcluster2}
+    \end{figure}
+    Finalmente se realiza la conexión al nodo \texttt{\textbf{master-vm}} y en este nos dirigimos a la carpeta nfs para este caso el directorio con nombre \textbf{cloud} compartida con todos los nodos.
+    
+    \begin{figure}[H] \centering
+            \includegraphics[scale=1.4]{img/provision/version1fin3.png}
+            \caption{Lanzamiento de Cluster en Marcha.Prueba basica de conectividad maquina master-vm.}
+            \label{fig:checkcluster2}
+    \end{figure}
+    
+     \begin{figure}[H] \centering
+            \includegraphics[scale=1.3]{img/provision/version1fin4.png}
+            \caption{Lanzamiento de Cluster en Marcha.Prueba de Conectividad incluyendo a todas las maquinas del cluster.}
+            \label{fig:checkcluster2}
+    \end{figure}
+    
+     \begin{figure}[H] \centering
+            \includegraphics[scale=1.4]{img/provision/version1fin5.png}
+            \caption{Lanzamiento de Cluster en Marcha.Pruebas con time.}
+            \label{fig:checkcluster2}
+    \end{figure}
     
     \clearpage
-    
     \section{Resultados}
+    Luego de haber realizado todo el montaje y despliegue del cluster MPI utilizando Vagrant este nos permite realizar 
     
-
     \clearpage
     
     \section{Participantes}
     \begin{itemize}
-        \item Hector Fabio Jimenez Saldarriaga, Estudiante de pregrado en Ingeniería De Sistema Y Computación: Planear, ejecutar, documentar y evaluar el proyecto.
+        \item Héctor Fabio Jiménez Saldarriaga, Estudiante de pregrado en Ingeniería De Sistema Y Computación: Planear, ejecutar, documentar y evaluar el proyecto.
         \item Ramiro Andrés Barrios Valencia, MSc. Ingeniería de Sistemas y Computación, Especialista en Electrónica Digital: Director y Asesor del proyecto.
     \end{itemize}
     
@@ -692,7 +764,7 @@
 	\end{itemize}
 	
 	A continuación un valor estimado para los recursos considerados en el proyecto:
-	\begin{table}[t]
+	\begin{table}[h]
     \centering
     \begin{tabular}{}
     %table content
@@ -762,6 +834,12 @@
     
     \section{Conclusiones}
     
+      \begin{itemize}
+        \item Hacer uso de herramientas de IaC nos permite 
+        \item xxx
+        \item xxx1
+        
+    \end{itemize}
     \clearpage
     
     \section{Bibliografía}
