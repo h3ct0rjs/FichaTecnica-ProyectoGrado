@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.box_check_update = false
+  config.vm.hostname = "basebox-vm"
+  config.vm.network "private_network", ip: "192.168.33.10"
+  
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.memory = "1024"
+  end
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update 
+    apt autoremove -y 
+    apt-get remove unattended-upgrades -y   
+    systemctl stop apt-daily.service
+    systemctl stop apt-daily.timer
+    systemctl disable apt-daily.timer
+    systemctl disable apt-daily.service
+    systemctl kill --kill-who=all apt-daily.service
+    # wait until `apt-get updated` has been killed
+    while ! (systemctl list-units --all apt-daily.service | egrep -q '(dead|failed)')
+    do
+      sleep 1;
+    done
+    apt install gcc g++ cmake make build-essential -y
+    wget https://www.mpich.org/static/downloads/3.3.2/mpich-3.3.2.tar.gz -o /home/vagrant/mpich-3.3.2.tar.gz
+    chown vagrant:vagrant /home/vagrant/mpich-3.3.2.tar.gz
+    #./configure --prefix=/home/vagrant/mpich/ --disable-fortran
+    #make && make install
+    reboot 
+  SHELL
+end
