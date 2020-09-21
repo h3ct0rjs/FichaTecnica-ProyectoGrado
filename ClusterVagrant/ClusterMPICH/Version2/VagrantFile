@@ -4,10 +4,14 @@
 #Global Variables
 SLAVES_NUM = 1
 SLAVE_CORE = 1 
-SLAVE_MEMORY = "1024"
+SLAVE_MEMORY = "384"
 MASTER_CORES = 2
 MASTER_MEMORY = "1024"
 GUI_P = false
+#TODO : Review the interblock proccess of apt-daily. Check for alternatives.
+#TODO : Find Benchmarks to run in the cluster for mpi
+#TODO : Check for nfs mount problem. 
+
 
 Vagrant.configure("2") do |config|
     scriptmaster = <<-SHELL
@@ -16,7 +20,7 @@ Vagrant.configure("2") do |config|
     # wait until `apt-get updated` has been killed
     while ! (systemctl list-units --all apt-daily.service | egrep -q '(dead|failed)')
     do
-      sleep 1;
+      sleep 5;
     done
 
     echo "#Cluster File">>/etc/hosts
@@ -49,11 +53,22 @@ Vagrant.configure("2") do |config|
     if [ "$HOSTNAME" = "master-vm" ]; then 
       #Si es el servidor, master-vm haga la instalacion del nfs-server.
       echo "on the MASTER HOST"
+      echo "Installing NFS on MASTER Node"
       apt install -y nfs-server
       echo "/home/vagrant/cloud *(rw,sync,no_root_squash,no_subtree_check)">>/etc/exports	#Persistence against reboots.
       exportfs -a
       service nfs-kernel-server restart
+      df -h
       apt update && apt autoremove -y 
+      echo "Creating Machine File in NFS"
+      echo -e "Downloading Sample MPI.C"
+      wget https://raw.githubusercontent.com/h3ct0rjs/FichaTecnica-ProyectoGrado/master/ClusterVagrant/ClusterMPICH/Version1/mpi_hello.c -O /home/vagrant/cloud/mpi_hello.c
+      echo "Machine File"
+      touch /home/vagrant/cloud/machinefile
+      for i in {1..SLAVES_NUM};    
+      do
+        echo "slave$i-vm" >> /home/vagrant/cloud/machinefile
+      done
     else
       echo "on the SLAVE-VM HOST"
       echo "Installing NFS on Worker Node"
@@ -64,17 +79,9 @@ Vagrant.configure("2") do |config|
           chown vagrant:vagrant  /home/vagrant/cloud
           mount -t nfs master-vm:/home/vagrant/cloud /home/vagrant/cloud
           echo "master-vm:/home/vagrant/cloud /home/vagrant/cloud nfs defaults 0 0">>/etc/fstab 
+          df -h
     fi
-    echo "Creating Machine File in NFS"
-    echo -e "Downloading Sample MPI.C"
-    wget https://raw.githubusercontent.com/h3ct0rjs/FichaTecnica-ProyectoGrado/master/ClusterVagrant/ClusterMPICH/Version1/mpi_hello.c -O /home/vagrant/cloud/mpi_hello.c
     echo "ALL FINISH UP"
-    echo "Machine File"
-    touch /home/vagrant/cloud/machinefile
-    for i in {1..SLAVES_NUM};    
-    do
-      echo "slave$i-vm" >> /home/vagrant/cloud/machinefile
-    done
     chown vagrant:vagrant /home/vagrant/cloud/*
     echo "Hosts File"
     cat /etc/hosts
