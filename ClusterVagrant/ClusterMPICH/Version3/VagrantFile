@@ -1,0 +1,112 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#Global Variables
+SLAVES_NUM = 1
+SLAVE_CORE = 1 
+SLAVE_MEMORY = "384"
+MASTER_CORES = 2
+MASTER_MEMORY = "1024"
+GUI_P = false
+#TODO : Review the interblock proccess of apt-daily. Check for alternatives.
+#TODO : Find Benchmarks to run in the cluster for mpi
+#TODO : Check for nfs mount problem. 
+
+
+Vagrant.configure("2") do |config|
+    scriptmaster = <<-SHELL
+    echo "#Cluster File">>/etc/hosts
+    echo "192.168.33.10 master-vm">>/etc/hosts
+    for i in {1..SLAVES_NUM};    
+    do
+        echo "192.168.33.2$i slave$i-vm">>/etc/hosts
+        echo "192.168.33.2$i slave$i-vm"
+    done
+    echo "#SSH Keys Configuration"
+    if [[ ! -e /vagrant/id_rsa ]]; then
+      ssh-keygen -t rsa -b 4096 -f /vagrant/id_rsa -N ""
+    fi
+    (echo; cat /vagrant/id_rsa.pub) >> /home/vagrant/.ssh/authorized_keys
+    cp /vagrant/id_rsa* /home/vagrant/.ssh/
+    chown vagrant:vagrant /home/vagrant/.ssh/id_rsa*
+    chmod -R 600 /home/vagrant/.ssh/authorized_keys
+    chmod 400 /home/vagrant/.ssh/id_rsa
+    touch /home/vagrant/.ssh/config
+    echo 'Host 192.168.33.*' >> /home/vagrant/.ssh/config
+    echo 'StrictHostKeyChecking no' >> /home/vagrant/.ssh/config
+    echo 'UserKnownHostsFile /dev/null' >> /home/vagrant/.ssh/config
+    echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config
+    chown vagrant:vagrant /home/vagrant/.ssh/config
+    chmod -R 600 /home/vagrant/.ssh/config
+    echo -e "CREATING NFS FOLDER CLUSTER-MPI"
+    apt-get update
+    if [ "$HOSTNAME" = "master-vm" ]; then 
+      #Si es el servidor, master-vm haga la instalacion del nfs-server.
+      echo "on the MASTER HOST"
+      mkdir /home/vagrant/cloud	#Create the cloud folder to shared accross the cluster :) 
+      chown vagrant:vagrant /home/vagrant/cloud
+      echo "Installing NFS on MASTER Node"
+      apt install -y nfs-server && apt update && apt autoremove -y
+      echo "/home/vagrant/cloud *(rw,sync,no_root_squash,no_subtree_check)">>/etc/exports	#Persistence against reboots.
+      exportfs -a
+      service nfs-kernel-server restart
+      df -h
+      echo "Creating Machine File in NFS"
+      echo -e "Downloading Sample MPI.C"
+      wget https://raw.githubusercontent.com/h3ct0rjs/FichaTecnica-ProyectoGrado/master/ClusterVagrant/ClusterMPICH/Version1/mpi_hello.c -O /home/vagrant/cloud/mpi_hello.c
+      echo "Machine File"
+      for i in { 1..SLAVES_NUM };    
+      do
+        echo "slave$i-vm" >> /home/vagrant/cloud/machinefile
+      done
+    else
+      echo "on the SLAVE-VM HOST"
+      echo "Installing NFS on Worker Node"
+          apt autoremove -y && apt update
+          apt install -y nfs-common
+          mkdir /home/vagrant/cloud	#Create the cloud folder to shared accross the cluster :) 
+          chown vagrant:vagrant /home/vagrant/cloud
+          mount -t nfs master-vm:/home/vagrant/cloud /home/vagrant/cloud
+          echo "master-vm:/home/vagrant/cloud /home/vagrant/cloud nfs defaults 0 0">>/etc/fstab 
+          df -h
+    fi
+    echo "ALL FINISH UP"
+    chown vagrant:vagrant /home/vagrant/cloud/*
+    echo "Hosts File"
+    cat /etc/hosts
+    df -h
+  SHELL
+
+    config.vm.define "master-vm" do | vm1| 
+        vm1.vm.hostname = "master-vm"
+        vm1.vm.box = "c1b3rh4ck/cluster-mpi1804"
+        vm1.vm.box_check_update = false        
+        vm1.vm.provider "virtualbox" do |vb|
+          vb.gui = GUI_P
+          vb.memory = MASTER_MEMORY
+          vb.cpus = MASTER_CORES
+        end
+
+        #vm1.vm.network "forwarded_port", guest: 80, host: 8081
+        vm1.vm.network "private_network", ip: "192.168.33.10"
+        scriptmaster.sub! 'SLAVES_NUM', SLAVES_NUM.to_s
+        vm1.vm.provision "shell", inline: scriptmaster
+    end
+  
+    1.upto(SLAVES_NUM) do |i|
+      config.vm.define "slave#{i}-vm" do | slave| 
+        slave.vm.box = "c1b3rh4ck/cluster-mpi1804"
+        slave.vm.hostname = "slave#{i}-vm"
+        slave.vm.box_check_update = false
+  
+        slave.vm.provider "virtualbox" do |vb|
+          vb.gui = GUI_P
+          vb.memory = SLAVE_MEMORY
+          vb.cpus = SLAVE_CORE
+        end
+        slave.vm.network "private_network", ip: "192.168.33.2#{i}"
+        slave.vm.provision "shell", inline: scriptmaster
+    end
+  end
+end
+  
