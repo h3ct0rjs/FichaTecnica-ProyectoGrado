@@ -1,16 +1,23 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+#feedback : hfjimenez@utp.edu.co, Final Project 2020.
+#Notes 
+#It's is possible to pass enviroment variables to the Vagrant file or using 
+#getopt package from ruby to parse command line arguments. This is not a 
+#good way of doing this, vagrant maybe will misunderstood everything. 
 
 #Global Variables
-SLAVES_NUM = 1
-SLAVE_CORE = 1 
+#If you're using powershell use to set the environment variable $env:SLAVES_NUM=4
+#If you're using bash use to set the environment variable $env:SLAVES_NUM=4
+SLAVES_NUM = (ENV['SLAVES_NUM'] || 2).to_i  #All enviroment variables by default are strings. Cast to number
+SLAVE_CORE = (ENV['SLAVE_CORES'] || 1).to_i
 SLAVE_MEMORY = "384"
-MASTER_CORES = 2
+MASTER_CORES = ( ENV['SLAVE_CORES'] || 2 ).to_i
 MASTER_MEMORY = "1024"
 GUI_P = false
-#TODO : Review the interblock proccess of apt-daily. Check for alternatives.
-#TODO : Find Benchmarks to run in the cluster for mpi
-#TODO : Check for nfs mount problem. 
+
+#TODO : Run Benchmarks to run in the cluster for mpi
+#TODO : Create MakeFile for mpi hello world and benchmarks.
 
 
 Vagrant.configure("2") do |config|
@@ -39,14 +46,13 @@ Vagrant.configure("2") do |config|
     chown vagrant:vagrant /home/vagrant/.ssh/config
     chmod -R 600 /home/vagrant/.ssh/config
     echo -e "CREATING NFS FOLDER CLUSTER-MPI"
-    apt-get update
     if [ "$HOSTNAME" = "master-vm" ]; then 
       #Si es el servidor, master-vm haga la instalacion del nfs-server.
       echo "on the MASTER HOST"
       mkdir /home/vagrant/cloud	#Create the cloud folder to shared accross the cluster :) 
       chown vagrant:vagrant /home/vagrant/cloud
       echo "Installing NFS on MASTER Node"
-      apt install -y nfs-server && apt update && apt autoremove -y
+      apt update && apt install -y nfs-server  && apt autoremove -y
       echo "/home/vagrant/cloud *(rw,sync,no_root_squash,no_subtree_check)">>/etc/exports	#Persistence against reboots.
       exportfs -a
       service nfs-kernel-server restart
@@ -55,26 +61,31 @@ Vagrant.configure("2") do |config|
       echo -e "Downloading Sample MPI.C"
       wget https://raw.githubusercontent.com/h3ct0rjs/FichaTecnica-ProyectoGrado/master/ClusterVagrant/ClusterMPICH/Version1/mpi_hello.c -O /home/vagrant/cloud/mpi_hello.c
       echo "Machine File"
-      for i in { 1..SLAVES_NUM };    
-      do
-        echo "slave$i-vm" >> /home/vagrant/cloud/machinefile
-      done
+      cat /etc/hosts|grep 192.168.|awk '{print $2}' > /home/vagrant/cloud/machinefile
     else
       echo "on the SLAVE-VM HOST"
       echo "Installing NFS on Worker Node"
-          apt autoremove -y && apt update
-          apt install -y nfs-common
-          mkdir /home/vagrant/cloud	#Create the cloud folder to shared accross the cluster :) 
-          chown vagrant:vagrant /home/vagrant/cloud
-          mount -t nfs master-vm:/home/vagrant/cloud /home/vagrant/cloud
-          echo "master-vm:/home/vagrant/cloud /home/vagrant/cloud nfs defaults 0 0">>/etc/fstab 
-          df -h
+      apt update && apt autoremove -y && apt install -y nfs-common
+      mkdir /home/vagrant/cloud	#Create the cloud folder to shared accross the cluster :) 
+      chown vagrant:vagrant /home/vagrant/cloud
+      mount -t nfs master-vm:/home/vagrant/cloud /home/vagrant/cloud
+      echo "master-vm:/home/vagrant/cloud /home/vagrant/cloud nfs defaults 0 0">>/etc/fstab 
+      df -h
+      echo "NODE FINISH UP"        
+      chown vagrant:vagrant /home/vagrant/cloud/*
     fi
-    echo "ALL FINISH UP"
-    chown vagrant:vagrant /home/vagrant/cloud/*
     echo "Hosts File"
     cat /etc/hosts
     df -h
+    echo "Creating Swap in all nodes"
+    fallocate -l 4G /swapfile
+    dd if=/dev/zero of=/swapfile bs=1024 count=1048576
+    chmod 600 /swapfile
+    mkswap /swapfile
+    swapon /swapfile
+    echo "/swapfile swap swap defaults 0 0">>/etc/fstab 
+    swapon --show
+    free -h 
   SHELL
 
     config.vm.define "master-vm" do | vm1| 
