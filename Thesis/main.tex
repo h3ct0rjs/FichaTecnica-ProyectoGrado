@@ -6,14 +6,21 @@
 \usepackage{multirow}
 \usepackage[none]{hyphenat} %No corte palabras
 \usepackage{cite} % para contraer referencias
-
+\usepackage[table,xcdraw]{xcolor}
 % idioma
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 
 % subitems enumerated
 \usepackage[pointedenum]{paralist} 
-
+\usepackage{listings}
+\lstloadlanguages{Ruby}
+\lstset{
+   basicstyle=\fontsize{10}{10}\selectfont\ttfamily\color{black}, 
+   commentstyle = \ttfamily\color{red},
+    keywordstyle=\ttfamily\color{blue},
+    stringstyle=\color{orange}
+}
 %tablas
 \usepackage{booktabs}
 
@@ -29,6 +36,7 @@
 % Image will be in the same place as you want.!!! x-/
 \usepackage{subfig}
 \usepackage{cite}
+\usepackage{xcolor}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -126,13 +134,22 @@
     \begin{center}
     \thispagestyle{empty}
     \vspace*{\fill}
-    \textit{A Dios primeramente por permitirme estar en el buen camino y finalizar este gran paso en mi educación, a mis padres quienes me dieron todo su apoyo, amor infinito y fortaleza en todos los momentos mas difíciles de mi carrera. A mis hermanas, Leidy, Ana, y Cindy quienes son el motor para ser mi mejor version cada dia. A mi novia, Melissa quien siempre me apoyo incondicionalmente.}
+    \section*{Dedicatoria}
+    \textit{A Dios primeramente por permitirme estar en el buen camino y finalizar este gran paso en mi educación, a mis padres quienes me dieron todo su apoyo, amor infinito y fortaleza en todos los momentos mas difíciles de mi carrera. A mis hermanas, Leidy, Ana, y Cindy quienes son el motor para ser mi mejor versión cada día. A mi novia, Melissa quien siempre me apoyo incondicionalmente.}
     \begin{flushright}
     \textit{\textbf{Héctor Fabio Jiménez Saldarriaga}}
     \end{flushright}
     
     \vspace*{\fill}
     \end{center}
+      %Introducción al tema general
+      \clearpage
+    \newpage
+	\section*{Agradecimientos}
+	
+    Al ingeniero Ramiro Andrés Barrios Valencia por todo el apoyo brindado y las contribuciones realizadas durante el desarrollo de este proyecto de grado. A el grupo de Investigación Sirius por permitirme el uso de todos los recursos computaciones para experimentar, además de haberme brindado la posibilidad de conocer grandes personas. 
+    
+    Finalmente a la Universidad Tecnológica de Pereira por los conocimientos, experiencias durante la trayectoria de carrera, con los cuales fue posible la realización de este proyecto. 
 \clearpage
 \newpage
 %\contraportada
@@ -290,7 +307,7 @@
   
         \item Tipo de investigación
         
-        Basados en los puntos anteriores se considera que éste es un Proyecto de aplicación ya que se pretende desarrollar e implementar la automatización del clúster, buscando resolver problemas de la vida cotidiana y controlar situaciones prácticas, permitiendo la obtención de nuevos conocimientos por medio de la investigación realizada y la generación de un entregable después de la culminación de dicha investigación. 
+        Basados en los puntos anteriores se considera que éste es un Proyecto de aplicación ya que se pretende desarrollar e implementar la automatización para la creación de un clúster hpc, buscando resolver problemas de la vida cotidiana y controlar situaciones prácticas, permitiendo la obtención de nuevos conocimientos por medio de la investigación realizada y la generación de un entregable después de la culminación de dicha investigación. 
     
         En esta investigación se utilizará un enfoque cualitativo, además, se empleará el método científico.
         
@@ -302,13 +319,15 @@
     \subsection{Metodología}
     \textbf{Fases de la Metodología}
     \begin{itemize}
-        \item Fase 1 : Recolección de requerimientos y análisis de la información
-        \item Fase 2 : Diseño e implementación de despliegues automáticos
-        \item Fase 3 : Documentación y conclusiones
+        \item Fase 1, \textbf{Recolección de requerimientos y análisis de la información:} Durante esta etapa se genero un listado de actividades y herramientas opensource disponibles para ejecutar el proceso de automatización teniendo muy presente el curso de computación de alto desempeño y los pasos de creación del un cluster HPC utilizando el estándar MPI.También se realizó la búsqueda de la literatura recomendada sobre libros de Infraestructura como Código para poder llevar acabo todo el proceso de programático y declarativo. 
+        \item Fase 2, \textbf{ Diseño e implementación de despliegues automáticos:} Se realizaron pruebas experimentales de construcción manual de un cluster HPC utilizando VirtualBox para determinar los planes a ejecutar en nuestro archivos de programación declarativa. Se realizo la revisión documental de las diferentes herramientas utilizadas para el éxito de este proyecto. 
+        
+        \item Fase 3, \textbf{Documentación y conclusiones:} Se realiza la creación de este documento, donde se detalla de manera clara y concisa la implementación realizada y cada una de sus etapas. Se realizan múltiples pruebas para realizar la validación de nuestra hipótesis y probar la idempotencia asegurada al usar vagrant.
+        
     \end{itemize}\\
        \clearpage
     
-    \section{Implementación}
+    \section{Implementación}\label{implementacion}
     \subsection{Configuraciones Iniciales y Prerrequisitos}
     Para realizar este proyecto de grado, las instalaciones de pruebas se implementaron utilizando el sistema operativo Windows 10 Professional version de 64 bits, junto con la herramienta de Windows Subsystem for Linux (WSL2).
     
@@ -696,7 +715,7 @@
     En la consulta realizada, se determina que la mejor manera de resolver este inconveniente es deshabilitar el servicio de \textbf{systemd apt-daily.service} al momento de lanzar la ejecución y espera que no exista ningún otro proceso haciendo uso de los archivos protegidos usados por \texttt{apt}.
     \begin{figure}[H]\centering
             \includegraphics[scale=1.4]{img/provision/problemaapt1.png}
-            \caption{Solución Programática.Se Deshabilita Servicio problematico.}
+            \caption{Solución Programática.Se Deshabilita Servicio problemático.}
             \label{fig:checkssh}
     \end{figure}
     
@@ -704,7 +723,7 @@
     
     \begin{figure}[H]\centering
             \includegraphics[scale=1.4]{img/provision/version1fin.png}
-            \caption{Lanzamiento de Cluster en Marcha.}
+            \caption{Lanzamiento de Cluster estado de los nodos no creados.}
             \label{fig:checkcluster1}
     \end{figure}
     
@@ -713,7 +732,7 @@
             \caption{Lanzamiento de Cluster en Marcha.Todos los nodos se encuentran en ejecución.}
             \label{fig:checkcluster2}
     \end{figure}
-    Finalmente se realiza la conexión al nodo \texttt{\textbf{master-vm}} y en este nos dirigimos a la carpeta nfs para este caso el directorio con nombre \textbf{cloud} compartida con todos los nodos.
+    Finalmente se realiza la conexión al nodo \texttt{\textbf{master-vm}} y en este nos dirigimos a la carpeta nfs para este caso con nombre \textbf{cloud} compartida con todos los nodos.
     
     \begin{figure}[H] \centering
             \includegraphics[scale=1.4]{img/provision/version1fin3.png}
@@ -733,10 +752,55 @@
             \label{fig:checkcluster2}
     \end{figure}
     
+    \begin{figure}[H] \centering
+            \includegraphics[scale=1.4]{img/provision/version1fin6.png}
+            \caption{Destruccion de entorno de Cluster.}
+            \label{fig:checkcluster2}
+    \end{figure}
+    
     \clearpage
     \section{Resultados}
-    Luego de haber realizado todo el montaje y despliegue del cluster MPI utilizando Vagrant este nos permite realizar 
     
+    Luego de haber realizado todo el montaje y despliegue del cluster MPI utilizando Vagrant el tiempo de instalación y configuración utilizado en el proceso se reduce significativamente
+    comparándolo al método manual, a continuación la siguiente tabla refleja todo los pasos requeridos de una sola maquina : 
+    
+\begin{table}[h]
+\begin{tabular}{|c|l|l|c|}
+\hline
+\rowcolor[HTML]{68CBD0} 
+\textbf{\#} & \multicolumn{1}{c|}{\cellcolor[HTML]{68CBD0}\textbf{Metódo}} & \multicolumn{1}{c|}{\cellcolor[HTML]{68CBD0}\textbf{Descripción}}                                              & \textbf{Tiempo} \\ \hline
+1           & Manual                                                       & Creación y configuración de parámetros de Maquina Virtual                                                      & 12                       \\ \hline
+2           & Manual                                                       & Descarga de imagen de Sistema Operativo Ubuntu LTS16.04                                                        & 10                       \\ \hline
+3           & Manual                                                       & Instalación de Sistema Operativo Ubuntu LTS 16.04 y usuarios                                                   & 15-20                    \\ \hline
+4           & Manual                                                       & \begin{tabular}[c]{@{}l@{}}Configuración de Direccionamiento IP y archivos de\\ configuración ssh\end{tabular} & 10                       \\ \hline
+5           & Manual                                                       & Creación de Usuario a utilizar por el cluster                                                                  & 6                        \\ \hline
+6           & Manual                                                       & Descarga de Archivos Binarios MPICH y Compilación                                                              & 8                        \\ \hline
+7           & Manual                                                       & Instalación y Configuración de Sistema de Archivos NFS                                                         & 6                        \\ \hline
+8           & Manual                                                       & \begin{tabular}[c]{@{}l@{}}Exportación de Imagen .OVA como imagen base para nodos\\  esclavos\end{tabular}     & 15                       \\ \hline
+9           & \multicolumn{1}{c|}{Manual}                                  & \begin{tabular}[c]{@{}l@{}}Importación de Imagen base .OVA y creación de Maquinas  \\ Virtuales por cada nodo\end{tabular}    & 18                       \\ \hline
+10          & \multicolumn{1}{c|}{Manual}                                  & Pruebas de conectividad y ejecución con MPICH                                                                  & 10                       \\ \hline
+\multicolumn{3}{|c|}{\textbf{Tiempo Total  Estimado de creación de Cluster, minutos}}                                                                                                                & \textbf{110}             \\ \hline
+\end{tabular}\hspace*{-70pt}
+\end{table}
+    
+    La estimación anterior de 110 minutos, se obtiene luego de haber realizado las múltiples actividades durante varias veces y realizar una toma de tiempos utilizando un cronometro. Al realizar este mismo proceso con vagrant el tiempo de creación e instalación de un solo nodo toma aproximadamente 6 minutos, siempre la primera vez que instanciamos el cluster, Vagrant debe realizar la descarga de la imagen base custom creada para el proyecto \url{https://app.vagrantup.com/c1b3rh4ck}, el tiempo aproximado de esta descarga es de 6 minutos con una conexión mínima de 10Mbps, el tamaño de la imagen tiene un total de aproximadamente 500MB, Vagrant Cloud utiliza Amazon Web Service, S3 para realizar el delivery de la imagen. 
+    
+    Al realizar la revisión de las actividades para inicializar el cluster se tiene un tiempo estimado como el que se muestra en la siguiente tabla :
+    
+\begin{table}[h]
+\begin{tabular}{|c|l|l|c|}
+\hline
+\rowcolor[HTML]{68CBD0} 
+\textbf{\#} & \textbf{Metódo} & \multicolumn{1}{c|}{\cellcolor[HTML]{68CBD0}\textbf{Descripción }}                      & \textbf{Tiempo{[}min{]}} \\ \hline
+1           & Automatico      & \begin{tabular}[c]{@{}l@{}}\texttt{vagrant up}, primera vez.Descarga de imagen\\ vagrantcloud.\end{tabular} & 6-10                     \\ \hline
+2           & Automatico      & Vagrant Provisioning nodo Maestro                                                                  & 6-8                       \\ \hline
+3           & Automatico      & Vagrant provisioning por cada nodo esclavo                                                                  & 6-8                       \\ \hline
+\multicolumn{3}{|c|}{\textbf{Tiempo Total  Estimado de creación de Cluster MPI}}                                                       & \textbf{26}             \\ \hline
+\end{tabular}
+\end{table}
+
+Los 26 minutos incluyen la descarga de la imagen base, pero si esta ya ha sido instanciada al menos una vez restaremos tendremos un tiempo de aprovisionamiento y creación de 16 minutos o menos.
+
     \clearpage
     
     \section{Participantes}
@@ -764,14 +828,6 @@
 	\end{itemize}
 	
 	A continuación un valor estimado para los recursos considerados en el proyecto:
-	\begin{table}[h]
-    \centering
-    \begin{tabular}{}
-    %table content
-    \end{tabular}
-    \caption{}
-    \label{tab:label}
-    \end{table}
 
 	\begin{center}
     \begin{tabular}{|p{2.5cm}|p{3cm}|p{2cm}|p{2cm}|p{3cm}|}
@@ -835,13 +891,58 @@
     \section{Conclusiones}
     
       \begin{itemize}
-        \item Hacer uso de herramientas de IaC nos permite 
-        \item xxx
-        \item xxx1
+        \item Hacer uso de herramientas de IaC como Vagrant nos permite aprovisionar, gestionar infraestructuras TI de cualquier tipo a través del uso de código fuente de manera que las operaciones de configuración, instalación son mas rápidos, seguros y consistentes como se observa en el capitulo de implementación \ref{implementacion}.
+        \item Los hipervisores de maquinas virtuales son herramientas importantes en el área de ingeniería de sistemas pues permiten realizar pruebas y realizar simulación de la complejidad que se experimenta a gran escala de cluster de computación de alto desempeño.También hace posible que el futuro ingeniero, pueda experimentar en la configuración, aprovisionamiento e implementación de productos de software de la industria. 
+        
+        \item Como pudo observarse en el capitulo \ref{implementacion} De manera \textit{declarativa} es posible manipular todos los componentes del cluster MPI, componentes de networking, componentes de configuración de maquinas virtuales, e instalaciones durante el aprovisionamiento en los nodos. Esta manera declarativa nos permite tener resultados completamente idempotentes asegurando un estado final de los componentes a diferencia de lo que se observaría en infraestructuras virtuales clásicas que se realiza de manera imperativa.
+        \item Los Estudiantes de la clase de Computación de Alto Desempeño ó HPC pueden realizar el uso de este cluster para enfocarse mas en el entendimiento de como funciona el paralelismo en aplicaciones e implementaciones de código. Además de poder experimentar también con la herramienta Vagrant.
         
     \end{itemize}
     \clearpage
-    
+    \section{Anexo A: VagrantFile Cluster HPC MPI, Multinucleo Multimaquina}
+    \begin{lstlisting}[language=Python]
+    #hfjimenez@utp.edu.co, VagrantFile proyecto de Grado
+    #url: https://github.com/h3ct0rjs/FichaTecnica-ProyectoGrado/
+    SLAVES_NUM = (ENV['SLAVES_NUM'] || 2).to_i
+    SLAVE_CORE = (ENV['SLAVE_CORES'] || 1).to_i
+    SLAVE_MEMORY = "384"
+    MASTER_CORES = ( ENV['SLAVE_CORES'] || 2 ).to_i
+    MASTER_MEMORY = "1024"
+    GUI_P = false
+
+    Vagrant.configure("2") do |config|
+      config.vm.define "master-vm" do | vm1| 
+        vm1.vm.hostname = "master-vm"
+        vm1.vm.box = "c1b3rh4ck/cluster-mpi1804"
+        vm1.vm.box_check_update = false        
+        vm1.vm.provider "virtualbox" do |vb|
+          vb.gui = GUI_P
+          vb.memory = MASTER_MEMORY
+          vb.cpus = MASTER_CORES
+        end
+        
+        vm1.vm.network "private_network", ip: "192.168.33.10"
+        scriptmaster.sub! 'SLAVES_NUM', SLAVES_NUM.to_s
+        vm1.vm.provision "shell", inline: scriptmaster.sh
+    end
+  
+    1.upto(SLAVES_NUM) do |i|
+      config.vm.define "slave#{i}-vm" do | slave| 
+        slave.vm.box = "c1b3rh4ck/cluster-mpi1804"
+        slave.vm.hostname = "slave#{i}-vm"
+        slave.vm.box_check_update = false
+  
+        slave.vm.provider "virtualbox" do |vb|
+          vb.gui = GUI_P
+          vb.memory = SLAVE_MEMORY
+          vb.cpus = SLAVE_CORE
+        end
+        slave.vm.network "private_network", ip: "192.168.33.2#{i}"
+        slave.vm.provision "shell", inline: scriptmaster.sh
+    end
+  end
+\end{lstlisting}
+\newpage
     \section{Bibliografía}
     
     \bibliographystyle{acm}

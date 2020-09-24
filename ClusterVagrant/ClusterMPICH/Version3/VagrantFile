@@ -16,10 +16,6 @@ MASTER_CORES = ( ENV['SLAVE_CORES'] || 2 ).to_i
 MASTER_MEMORY = "1024"
 GUI_P = false
 
-#TODO : Run Benchmarks to run in the cluster for mpi
-#TODO : Create MakeFile for mpi hello world and benchmarks.
-
-
 Vagrant.configure("2") do |config|
     scriptmaster = <<-SHELL
     echo "#Cluster File">>/etc/hosts
